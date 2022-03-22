@@ -9,6 +9,8 @@ const checkoutRouter = require('./routes/checkout');
 const cartRouter = require('./routes/cart');
 const shopRouter = require('./routes/shop');
 const productdetailsRouter = require('./routes/product-details');
+const signinRouter = require('./routes/signin');
+
 
 const app = express();
 
@@ -27,6 +29,8 @@ app.use('/checkout', checkoutRouter);
 app.use('/cart', cartRouter);
 app.use('/shop', shopRouter);
 app.use('/product-details', productdetailsRouter);
+app.use('/signin', signinRouter);
+
 
 
 // catch 404 and forward to error handler
