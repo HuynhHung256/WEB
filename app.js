@@ -10,6 +10,11 @@ const cartRouter = require('./routes/cart');
 const shopRouter = require('./routes/shop');
 const productdetailsRouter = require('./routes/product-details');
 const signinRouter = require('./routes/signin');
+const dashRouter = require('./routes/dashboard');
+const chartRouter = require('./routes/chart');
+const tableRouter = require('./routes/table');
+
+
 
 
 const app = express();
@@ -30,6 +35,10 @@ app.use('/cart', cartRouter);
 app.use('/shop', shopRouter);
 app.use('/product-details', productdetailsRouter);
 app.use('/signin', signinRouter);
+app.use('/dashboard', dashRouter);
+app.use('/chart', chartRouter);
+app.use('/table', tableRouter);
+
 
 
 
