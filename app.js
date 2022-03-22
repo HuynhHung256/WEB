@@ -10,14 +10,7 @@ const cartRouter = require('./routes/cart');
 const shopRouter = require('./routes/shop');
 const productdetailsRouter = require('./routes/product-details');
 
-
-
-
 const app = express();
-
-
-
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
