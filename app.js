@@ -4,11 +4,11 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
-const indexRouter = require('./routes/index');
-const checkoutRouter = require('./routes/checkout');
-const cartRouter = require('./routes/cart');
-const shopRouter = require('./routes/shop');
-const productdetailsRouter = require('./routes/product-details');
+const indexRouter = require('./routes/user/index');
+const checkoutRouter = require('./routes/user/checkout');
+const cartRouter = require('./routes/user/cart');
+const shopRouter = require('./routes/user/shop');
+const productdetailsRouter = require('./routes/user/product-details');
 const signinRouter = require('./routes/signin');
 const dashRouter = require('./routes/dashboard');
 const chartRouter = require('./routes/chart');
