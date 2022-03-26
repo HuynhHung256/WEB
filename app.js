@@ -4,10 +4,10 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
-const indexRouter = require('./routes/user/index');
+const indexRouter = require('./routes/shop/index');
 const checkoutRouter = require('./routes/user/checkout');
 const cartRouter = require('./routes/user/cart');
-const shopRouter = require('./routes/user/shop');
+const shopRouter = require('./routes/shop/shop');
 const productdetailsRouter = require('./routes/user/product-details');
 const signinRouter = require('./routes/signin');
 const dashRouter = require('./routes/dashboard');
