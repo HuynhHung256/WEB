@@ -4,15 +4,21 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
+// shop
 const indexRouter = require('./routes/shop/index');
+const shopRouter = require('./routes/shop/shop');
+const productdetailsRouter = require('./routes/shop/product-details');
+
+// user
 const checkoutRouter = require('./routes/user/checkout');
 const cartRouter = require('./routes/user/cart');
-const shopRouter = require('./routes/shop/shop');
-const productdetailsRouter = require('./routes/user/product-details');
-const signinRouter = require('./routes/signin');
-const dashRouter = require('./routes/dashboard');
-const chartRouter = require('./routes/chart');
-const tableRouter = require('./routes/table');
+const signinRouter = require('./routes/user/signin');
+
+// admin
+const adminRouter = require('./routes/admin/admin');
+// const insertRouter= reqiure('./routes/admin/insert');
+
+
 
 
 
@@ -35,9 +41,10 @@ app.use('/cart', cartRouter);
 app.use('/shop', shopRouter);
 app.use('/product-details', productdetailsRouter);
 app.use('/signin', signinRouter);
-app.use('/dashboard', dashRouter);
-app.use('/chart', chartRouter);
-app.use('/table', tableRouter);
+app.use('/admin',adminRouter);
+
+// app.use('/insert',insertRouter);
+
 
 
 
