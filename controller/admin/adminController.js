@@ -5,3 +5,7 @@ exports.admin = (req, res, next) => {
 exports.insert = (req, res, next) => {
     res.render('admin/insert');
 }
+
+
+
+
