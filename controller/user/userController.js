@@ -1,12 +1,12 @@
 
-exports.signin = (req, res, next) => {
-    res.render('user/signin');
+exports.user = (req, res, next) => {
+    res.render('user/user');
 }
 
-exports.cart = (req, res, next) => {
-    res.render('user/cart');
-}
+// exports.cart = (req, res, next) => {
+//     res.render('user/cart');
+// }
 
-exports.checkout = (req, res, next) => {
-    res.render('user/checkout');
-}
+// exports.checkout = (req, res, next) => {
+//     res.render('user/checkout');
+// }

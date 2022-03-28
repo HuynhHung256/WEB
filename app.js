@@ -8,11 +8,13 @@ const logger = require('morgan');
 const indexRouter = require('./routes/shop/index');
 const shopRouter = require('./routes/shop/shop');
 const productdetailsRouter = require('./routes/shop/product-details');
+const checkoutRouter = require('./routes/shop/checkout');
+const cartRouter = require('./routes/shop/cart');
+const signinRouter = require('./routes/shop/signin');
+const userRouter=require('./routes/user/user.js');
+
 
 // user
-const checkoutRouter = require('./routes/user/checkout');
-const cartRouter = require('./routes/user/cart');
-const signinRouter = require('./routes/user/signin');
 
 // admin
 const adminRouter = require('./routes/admin/admin');
@@ -42,6 +44,8 @@ app.use('/shop', shopRouter);
 app.use('/product-details', productdetailsRouter);
 app.use('/signin', signinRouter);
 app.use('/admin',adminRouter);
+app.use('/user',userRouter);
+
 
 // app.use('/insert',insertRouter);
 

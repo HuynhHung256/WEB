@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const controller=require('../../controller/user/userController')
+const controller=require('../../controller/shop/shopController')
 
 /* GET home page. */
 router.get('/', controller.checkout);

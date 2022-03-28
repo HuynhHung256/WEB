@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const controller=require('../../controller/shop/shopController')
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-    res.render('chart');
-  });
+router.get('/', controller.signin);
 
 module.exports = router;
