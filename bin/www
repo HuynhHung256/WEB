@@ -3,12 +3,12 @@
 /**
  * Module dependencies.
  */
-require ('dotenv').config(); 
+require('dotenv').config();
 const debug = require('debug')('midterm:server');
 const async = require('hbs/lib/async');
 const http = require('http');
 const app = require('../app');
-const {connect,db} = require('../models/db');
+const { connect, db } = require('../models/db');
 
 /**
  * Get port from environment and store in Express.
@@ -22,29 +22,29 @@ app.set('port', port);
   /**
  * Create HTTP server.
  */
+  console.log('Connected...........');
+  const server = http.createServer(app);
 
-const server = http.createServer(app);
+  /**
+   * Listen on provided port, on all network interfaces.
+   */
 
-/**
- * Listen on provided port, on all network interfaces.
- */
+  server.listen(port);
+  server.on('error', onError);
+  server.on('listening', onListening);
+  /**
+   * Event listener for HTTP server "listening" event.
+   */
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
-/**
- * Event listener for HTTP server "listening" event.
- */
-
- function onListening() {
-  const addr = server.address();
-  const bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+  function onListening() {
+    const addr = server.address();
+    const bind = typeof addr === 'string'
+      ? 'pipe ' + addr
+      : 'port ' + addr.port;
+    debug('Listening on ' + bind);
+  }
 }
-}
-)
+)();
 
 
 /**

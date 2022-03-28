@@ -1,4 +1,6 @@
-const {list} = require('../../models/services/productService')
+const {list} = require('../../models/services/shopService');
+
+
 exports.home = (req, res, next) => {
     res.render('shop/index');
 }
@@ -8,8 +10,9 @@ exports.detail = (req, res, next) => {
 }
 
 exports.list = async (req, res, next) => {
-    const products = await list ();
-    res.render('shop/shop',products);
+    const products = await list();
+    console.log(products);
+    res.render('shop/shop',{products: products});
 }
 
 exports.signin = (req, res, next) => {
