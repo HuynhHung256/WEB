@@ -5,7 +5,6 @@ const controller=require('../../controller/admin/adminController')
 /* GET home page. */
 router.get('/', controller.admin);
 router.get('/:page', controller.admin);
-router.get('/:page', controller.admin);
 
 
 

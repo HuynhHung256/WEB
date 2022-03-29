@@ -15,9 +15,14 @@ exports.productById = async (id) => {
 exports.numOfPage = async () => {
    const numProductOfPage = 4;
    const numProduct = await db().collection('products').countDocuments();
-   
-
-
-
    return (Math.ceil(numProduct/numProductOfPage));
+}
+
+exports.send= async(obj)=>{
+   await db().collection("products").insertOne(obj,function (err,res){
+      if (err) throw err;
+        //neu khong co loi
+      console.log('Them thanh cong');
+   });
+   return;
 }

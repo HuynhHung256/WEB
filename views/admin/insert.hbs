@@ -1,13 +1,13 @@
 <!-- Product Details Area Start -->
 <div class="single-product-area section-padding-100 clearfix ml-5">
     <h3 class="mb-5 ml-5">INSERT PRODUCT</h3>
-    <form>
+    <form method="post" action="/insert">
         <div class="row mb-3">
             <div class="col-2 text-right pt-3">
                 <label for="name">Product name</label>
             </div>
             <div class="col-6">
-                <input id="name" type="text" class="form-control" placeholder="">
+                <input id="name" name="name" type="text" class="form-control" placeholder="">
             </div>
         </div>
         <div class="row mb-3">
@@ -15,7 +15,7 @@
                 <label for="price">Price</label>
             </div>
             <div class="col-6">
-                <input id="price" type="text" class="form-control" placeholder="">
+                <input id="price" name="price" type="text" class="form-control" placeholder="">
             </div>
         </div>
         <div class="row mb-3">
@@ -23,7 +23,7 @@
                 <label for="author">Author</label>
             </div>
             <div class="col-6">
-                <input id="author" type="text" class="form-control" placeholder="">
+                <input id="author" name="author" type="text" class="form-control" placeholder="">
             </div>
         </div>
         <div class="row mb-3">
@@ -31,7 +31,7 @@
                 <label for="year">Public Year</label>
             </div>
             <div class="col-6">
-                <input id="year" type="text" class="form-control" placeholder="">
+                <input id="year" name="year" type="text" class="form-control" placeholder="">
             </div>
         </div>
         <div class="row mb-3">
@@ -39,7 +39,7 @@
                 <label for="genre">Genre</label>
             </div>
             <div class="col-6">
-                <input id="Genre" type="text" class="form-control" placeholder="">
+                <input id="genre" name="genre" type="text" class="form-control" placeholder="">
             </div>
         </div>
         <div class="row mb-3">
@@ -47,7 +47,7 @@
                 <label for="img1">Img 1</label>
             </div>
             <div class="col-6">
-                <input id="img1" type="text" class="form-control" placeholder="">
+                <input id="img1" name="img1" type="text" class="form-control" placeholder="">
             </div>
         </div>
         <div class="row mb-3">
@@ -55,7 +55,7 @@
                 <label for="img2">Img 2</label>
             </div>
             <div class="col-6">
-                <input id="img2" type="text" class="form-control" placeholder="">
+                <input id="img2" name="img2" type="text" class="form-control" placeholder="">
             </div>
         </div>
         <div class="row mb-4">
@@ -63,7 +63,7 @@
                 <label for="img3">Img 3</label>
             </div>
             <div class="col-6">
-                <input id="img3" type="text" class="form-control" placeholder="">
+                <input id="img3" name="img3" type="text" class="form-control" placeholder="">
             </div>
         </div>
         <div class="row mb-3">
@@ -71,7 +71,8 @@
                 <a href="/admin"><button type="button" class="btn btn-light ">Cancel</button></a>
             </div>
             <div class="col-4 text-left">
-                <button id="submit" type="submit" class="btn btn-warning ">Submit</button>
+                <button onclick="send()" id="submit" type="submit" class="btn btn-warning">Submit</button>
+                {{!-- <input type="submit" value="Submit"> --}}
             </div>
         </div>
     </form>
