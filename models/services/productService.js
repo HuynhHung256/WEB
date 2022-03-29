@@ -22,7 +22,27 @@ exports.send= async(obj)=>{
    await db().collection("products").insertOne(obj,function (err,res){
       if (err) throw err;
         //neu khong co loi
-      console.log('Them thanh cong');
+      console.log('Inserted');
+   });
+   return;
+}
+
+exports.update= async(id,new_obj)=>{
+   const myquery = { _id: ObjectId(id) };
+   await db().collection("products").updateOne(myquery,{$set:new_obj},function (err,res){
+      if (err) throw err;
+        //neu khong co loi
+      console.log('Updated');
+   });
+   return;
+}
+
+exports.delete= async(id)=>{
+   const myquery = { _id: ObjectId(id) };
+   await db().collection("products").deleteOne(myquery,function (err,res){
+      if (err) throw err;
+        //neu khong co loi
+      console.log('Deleted');
    });
    return;
 }
