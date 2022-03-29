@@ -18,7 +18,8 @@ const userRouter=require('./routes/user/user.js');
 
 // admin
 const adminRouter = require('./routes/admin/admin');
-// const insertRouter= reqiure('./routes/admin/insert');
+const insertRouter= require('./routes/admin/insert');
+const adminviewRouter=require('./routes/admin/admin-view');
 
 
 
@@ -44,7 +45,9 @@ app.use('/shop', shopRouter);
 app.use('/product-details', productdetailsRouter);
 app.use('/signin', signinRouter);
 app.use('/admin',adminRouter);
+app.use('/insert',insertRouter);
 app.use('/user',userRouter);
+app.use('/admin-view',adminviewRouter);
 
 
 // app.use('/insert',insertRouter);
