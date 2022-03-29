@@ -3,6 +3,6 @@ const router = express.Router();
 const controller=require('../../controller/shop/shopController')
 
 /* GET home page. */
-router.get('/', controller.detail);
+router.get('/:id', controller.detail);
 
 module.exports = router;

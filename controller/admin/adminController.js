@@ -1,4 +1,4 @@
-const {list} = require('../../models/services/shopService');
+const {list} = require('../../models/services/productService');
 
 exports.admin = async (req, res, next) => {
     const products = await list();
