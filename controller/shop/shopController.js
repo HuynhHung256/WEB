@@ -13,9 +13,10 @@ exports.detail = async (req, res, next) => {
 }
 
 exports.list = async (req, res, next) => {
-    const products = await list();
+    const page=req.params['page']||1;
+    const products = await list(page);
     const nPage = await numOfPage();
-    console.log(typeof(nPage));
+    console.log(page);
     res.render('shop/shop', { products: products, page: nPage });
 }
 

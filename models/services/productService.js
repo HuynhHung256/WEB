@@ -3,8 +3,9 @@ const async = require('hbs/lib/async');
 const { ObjectId } = require('mongodb');
 const { db } = require('../db');
 
-exports.list = async () => {
-   return await db().collection('products').find().toArray();
+exports.list = async (page) => {
+   const productInPage=4;
+   return await (await db().collection('products').find().toArray()).slice(productInPage*(page-1),productInPage*page);
 }
 
 exports.productById = async (id) => {
