@@ -21,8 +21,9 @@ exports.insert = (req, res, next) => {
 exports.sendToServer = async (req, res, next) => {
     const obj = JSON.parse(JSON.stringify(req.body));
     await service.send(obj);
-    this.admin();
-
+    const products = await service.list(1);
+    const nPage = await service.numOfPage();
+    res.render('admin/admin', { products: products, page: nPage });
 }
 
 exports.updateProduct = async (req, res, next) => {
