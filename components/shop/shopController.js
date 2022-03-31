@@ -16,9 +16,9 @@ exports.detail = async (req, res, next) => {
 exports.list = async (req, res, next) => {
     const page=req.params['page']||1;
     const products = await service.list(page,NUM_PRODUCT_IN_PAGE);
-    const nPage = await service.numOfPage(NUM_PRODUCT_IN_PAGE);
+    const nProduct = await service.numOfProduct();
     console.log(page);
-    res.render('shop/shop', { products: products, page: nPage });
+    res.render('shop/shop', { products: products, nProduct:nProduct, page: page , nPage: Math.ceil(nProduct/NUM_PRODUCT_IN_PAGE)});
 }
 
 exports.signin = (req, res, next) => {

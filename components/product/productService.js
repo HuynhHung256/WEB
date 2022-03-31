@@ -11,9 +11,8 @@ exports.productById = async (id) => {
    return await db().collection('products').find({ _id: ObjectId(id)}).toArray();
 }
 
-exports.numOfPage = async (limit) => {
-   const numProduct = await db().collection('products').countDocuments();
-   return (Math.ceil(numProduct/limit));
+exports.numOfProduct = async () => {
+   return await db().collection('products').find().count();
 }
 
 exports.send= async(obj)=>{

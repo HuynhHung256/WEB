@@ -3,15 +3,15 @@ const { ObjectId } = require('mongodb');
 // const { list, numOfPage, productById, send, update , delete }
 const service = require('../product/productService');
 
-const NUM_PRODUCT_IN_PAGE=4;
+const NUM_PRODUCT_IN_PAGE=8;
 
 
 
 exports.admin = async (req, res, next) => {
     const page = req.params['page'] || 1;
     const products = await service.list(page,NUM_PRODUCT_IN_PAGE);
-    const nPage = await service.numOfPage(NUM_PRODUCT_IN_PAGE);
-    res.render('admin/admin', { products: products, page: nPage });
+    const nProduct = await service.numOfProduct();
+    res.render('admin/admin', { products: products, nProduct:nProduct, page: page , nPage: Math.ceil(nProduct/NUM_PRODUCT_IN_PAGE)});
 }
 exports.detail = async (req, res, next) => {
     const id = req.params['id'];
@@ -25,9 +25,7 @@ exports.insert = (req, res, next) => {
 exports.sendToServer = async (req, res, next) => {
     const obj = JSON.parse(JSON.stringify(req.body));
     await service.send(obj);
-    const products = await service.list(1);
-    const nPage = await service.numOfPage();
-    res.render('admin/admin', { products: products, page: nPage });
+    res.redirect('/admin');
 }
 
 exports.updateProduct = async (req, res, next) => {
@@ -35,14 +33,11 @@ exports.updateProduct = async (req, res, next) => {
     const obj = JSON.parse(JSON.stringify(req.body));
     if (obj.delete) {
         await service.delete(id);
-        const products = await service.list(1);
-        const nPage = await service.numOfPage();
-        res.render('admin/admin', { products: products, page: nPage });
+        res.redirect('/admin');
     }
     else {
         await service.update(id, obj);
-        const product = await service.productById(id);
-        res.render('admin/admin-view', { product: product });
+        res.redirect('/admin-view/'+id);
     }
 }
 
