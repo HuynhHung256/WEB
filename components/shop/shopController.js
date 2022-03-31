@@ -1,6 +1,7 @@
 const async = require('hbs/lib/async');
-const { list, numOfPage, productById } = require('../product/productService');
+const service = require('../product/productService');
 
+const NUM_PRODUCT_IN_PAGE=4;
 
 exports.home = (req, res, next) => {
     res.render('shop/index');
@@ -8,15 +9,14 @@ exports.home = (req, res, next) => {
 
 exports.detail = async (req, res, next) => {
     const id = req.params['id'];
-    const product = await productById(id);
+    const product = await service.productById(id);
     res.render('shop/product-detail', {product:product});
 }
 
 exports.list = async (req, res, next) => {
-    const limit=4;
     const page=req.params['page']||1;
-    const products = await list(page,limit);
-    const nPage = await numOfPage();
+    const products = await service.list(page,NUM_PRODUCT_IN_PAGE);
+    const nPage = await service.numOfPage(NUM_PRODUCT_IN_PAGE);
     console.log(page);
     res.render('shop/shop', { products: products, page: nPage });
 }

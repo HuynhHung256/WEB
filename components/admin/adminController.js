@@ -3,11 +3,14 @@ const { ObjectId } = require('mongodb');
 // const { list, numOfPage, productById, send, update , delete }
 const service = require('../product/productService');
 
+const NUM_PRODUCT_IN_PAGE=4;
+
+
+
 exports.admin = async (req, res, next) => {
-    const limit=4;
     const page = req.params['page'] || 1;
-    const products = await service.list(page,limit);
-    const nPage = await service.numOfPage();
+    const products = await service.list(page,NUM_PRODUCT_IN_PAGE);
+    const nPage = await service.numOfPage(NUM_PRODUCT_IN_PAGE);
     res.render('admin/admin', { products: products, page: nPage });
 }
 exports.detail = async (req, res, next) => {
