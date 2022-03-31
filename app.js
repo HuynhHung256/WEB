@@ -5,21 +5,21 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 // shop
-const indexRouter = require('./routes/shop/index');
-const shopRouter = require('./routes/shop/shop');
-const productdetailsRouter = require('./routes/shop/product-details');
-const checkoutRouter = require('./routes/shop/checkout');
-const cartRouter = require('./routes/shop/cart');
-const signinRouter = require('./routes/shop/signin');
-const userRouter=require('./routes/user/user.js');
+const indexRouter = require('./components/shop/index');
+const shopRouter = require('./components/shop/shop');
+const productdetailsRouter = require('./components/shop/product-details');
+const checkoutRouter = require('./components/user/checkout');
+const cartRouter = require('./components/user/cart');
+const signinRouter = require('./components/shop/signin');
+const userRouter=require('./components/user/user.js');
 
 
 // user
 
 // admin
-const adminRouter = require('./routes/admin/admin');
-const insertRouter= require('./routes/admin/insert');
-const adminviewRouter=require('./routes/admin/admin-view');
+const adminRouter = require('./components/admin/admin');
+const insertRouter= require('./components/admin/insert');
+const adminviewRouter=require('./components/admin/admin-view');
 
 
 
