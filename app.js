@@ -4,22 +4,29 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
-// shop
-const indexRouter = require('./components/shop/index');
-const shopRouter = require('./components/shop/shop');
-const productdetailsRouter = require('./components/shop/product-details');
+// Home
+const homeRouter = require('./components/home/homeRoute');
+
+// Shop
+const shopRouter = require('./components/shop/shopRoute');
+
+// Admin
+const adminRouter = require('./components/admin/adminRoute');
+const insertRouter= require('./components/admin/insertRoute');
+
+
+
+// not yet
+// const productdetailsRouter = require('./components/shop/product-details');
 const checkoutRouter = require('./components/user/checkout');
 const cartRouter = require('./components/user/cart');
-const signinRouter = require('./components/shop/signin');
+// const signinRouter = require('./components/shop/signin');
 const userRouter=require('./components/user/user.js');
 
 
 // user
 
-// admin
-const adminRouter = require('./components/admin/admin');
-const insertRouter= require('./components/admin/insert');
-const adminviewRouter=require('./components/admin/admin-view');
+// const adminviewRouter=require('./components/admin/admin-view');
 
 
 
@@ -38,16 +45,17 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+app.use('/', homeRouter);
 app.use('/checkout', checkoutRouter);
 app.use('/cart', cartRouter);
 app.use('/shop', shopRouter);
-app.use('/product-details', productdetailsRouter);
-app.use('/signin', signinRouter);
-app.use('/admin',adminRouter);
+// app.use('/product-details', productdetailsRouter);
+// app.use('/signin', signinRouter);
 app.use('/insert',insertRouter);
+app.use('/admin',adminRouter);
+// app.use('/insert',insertRouter);
 app.use('/user',userRouter);
-app.use('/admin-view',adminviewRouter);
+// app.use('/admin-view',adminviewRouter);
 
 
 // app.use('/insert',insertRouter);
