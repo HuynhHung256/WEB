@@ -41,6 +41,9 @@ exports.updateProduct = async (req, res, next) => {
     }
 }
 
+exports.createAdmin=(req,res,next)=>{
+    res.render('admin/create-admin');
+}
 // exports.deleteProduct = async (req, res, next) => {
 //     const id = req.params['id'];
 //     await service.delete(id);

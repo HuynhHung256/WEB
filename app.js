@@ -13,6 +13,7 @@ const shopRouter = require('./components/shop/shopRoute');
 // Admin
 const adminRouter = require('./components/admin/adminRoute');
 const insertRouter= require('./components/admin/insertRoute');
+const createAdminRouter= require('./components/admin/createAdminRoute');
 
 
 
@@ -45,21 +46,30 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+// home
 app.use('/', homeRouter);
+
+// shop
+app.use('/shop', shopRouter);
+
+// admin
+app.use('/admin',adminRouter);
+app.use('/insert',insertRouter);
+app.use('/create-admin',createAdminRouter);
+
+
+// user
+app.use('/user',userRouter);
 app.use('/checkout', checkoutRouter);
 app.use('/cart', cartRouter);
-app.use('/shop', shopRouter);
+
+
+// app.use('/insert',insertRouter);
 // app.use('/product-details', productdetailsRouter);
 // app.use('/signin', signinRouter);
-app.use('/insert',insertRouter);
-app.use('/admin',adminRouter);
 // app.use('/insert',insertRouter);
-app.use('/user',userRouter);
 // app.use('/admin-view',adminviewRouter);
-
-
-// app.use('/insert',insertRouter);
-
 
 
 
