@@ -3,8 +3,12 @@ const service = require('../product/productService');
 
 const NUM_PRODUCT_IN_PAGE=4;
 
-exports.home = (req, res, next) => {
-    res.render('shop/index');
+exports.home = async(req, res, next) => {
+    const page=req.params['page']||1;
+    const products = await service.list(page,9);
+    const nProduct = await service.numOfProduct();
+    console.log(page);
+    res.render('shop/index', { products: products, nProduct:nProduct, page: page , nPage: Math.ceil(nProduct/NUM_PRODUCT_IN_PAGE)});
 }
 
 exports.detail = async (req, res, next) => {
