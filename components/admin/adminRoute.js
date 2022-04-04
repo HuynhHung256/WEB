@@ -3,9 +3,9 @@ const router = express.Router();
 const controller=require('./adminController');
 
 /* GET home page. */
-router.get('/', controller.list);
-router.get('/:page', controller.list);
-router.get('/product/:id', controller.detail);
-router.post('/product/:id', controller.updateProduct);
+router.get('/', controller.showList);
+router.get('/:page', controller.showList);
+router.get('/product/:id', controller.showDetail);
+router.post('/product/:id', controller.editProduct);
 
 module.exports = router;

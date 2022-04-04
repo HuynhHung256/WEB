@@ -7,28 +7,28 @@ const NUM_PRODUCT_IN_PAGE=4;
 
 
 
-exports.list = async (req, res, next) => {
+exports.showList = async (req, res, next) => {
     const page = req.params['page'] || 1;
     const products = await service.list(page,NUM_PRODUCT_IN_PAGE);
     const nProduct = await service.numOfProduct();
     res.render('admin/index', { products: products, nProduct:nProduct, page: page , nPage: Math.ceil(nProduct/NUM_PRODUCT_IN_PAGE)});
 }
-exports.detail = async (req, res, next) => {
+exports.showDetail = async (req, res, next) => {
     const id = req.params['id'];
     const product = await service.productById(id);
     res.render('admin/product-detail', { product: product });
 }
-exports.insert = (req, res, next) => {
+exports.showCreateProduct = (req, res, next) => {
     res.render('admin/insert');
 }
 
-exports.sendToServer = async (req, res, next) => {
+exports.createProduct = async (req, res, next) => {
     const obj = JSON.parse(JSON.stringify(req.body));
     await service.send(obj);
     res.redirect('/admin');
 }
 
-exports.updateProduct = async (req, res, next) => {
+exports.editProduct = async (req, res, next) => {
     const id = req.params['id'];
     const obj = JSON.parse(JSON.stringify(req.body));
     if (obj.delete) {

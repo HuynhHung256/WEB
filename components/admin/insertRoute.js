@@ -3,8 +3,8 @@ const router = express.Router();
 const controller=require('./adminController');
 
 /* GET home page. */
-router.get('/', controller.insert);
-router.post('/',controller.sendToServer);
+router.get('/', controller.showCreateProduct);
+router.post('/',controller.createProduct);
 
 
 module.exports = router;

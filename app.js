@@ -15,13 +15,14 @@ const adminRouter = require('./components/admin/adminRoute');
 const insertRouter= require('./components/admin/insertRoute');
 const createAdminRouter= require('./components/admin/createAdminRoute');
 
+// Authentication
+const signinRouter = require('./components/authentication/signinRoute');
 
 
 // not yet
 // const productdetailsRouter = require('./components/shop/product-details');
 const checkoutRouter = require('./components/user/checkout');
 const cartRouter = require('./components/user/cart');
-// const signinRouter = require('./components/shop/signin');
 const userRouter=require('./components/user/user.js');
 
 
@@ -57,6 +58,9 @@ app.use('/shop', shopRouter);
 app.use('/admin',adminRouter);
 app.use('/insert',insertRouter);
 app.use('/create-admin',createAdminRouter);
+
+// authentication
+app.use('/signin',signinRouter);
 
 
 // user
