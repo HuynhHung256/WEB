@@ -3,7 +3,7 @@ const { ObjectId } = require('mongodb');
 // const { list, numOfPage, productById, send, update , delete }
 const service = require('../product/productService');
 
-const NUM_PRODUCT_IN_PAGE=8;
+const NUM_PRODUCT_IN_PAGE=4;
 
 
 
