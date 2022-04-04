@@ -3,13 +3,13 @@ const service = require('../product/productService');
 
 const NUM_PRODUCT_IN_PAGE=4;
 
-exports.detail = async (req, res, next) => {
+exports.showDetail = async (req, res, next) => {
     const id = req.params['id'];
     const product = await service.productById(id);
     res.render('shop/product-detail', {product:product});
 }
 
-exports.list = async (req, res, next) => {
+exports.showList = async (req, res, next) => {
     const page=req.params['page']||1;
     const products = await service.list(page,NUM_PRODUCT_IN_PAGE);
     const nProduct = await service.numOfProduct();
