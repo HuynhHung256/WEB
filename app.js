@@ -17,6 +17,7 @@ const createAdminRouter= require('./components/admin/createAdminRoute');
 
 // Authentication
 const signinRouter = require('./components/authentication/signinRoute');
+const signupRouter = require('./components/authentication/signupRoute');
 
 
 // not yet
@@ -61,7 +62,7 @@ app.use('/create-admin',createAdminRouter);
 
 // authentication
 app.use('/signin',signinRouter);
-
+app.use('/signup',signupRouter);
 
 // user
 app.use('/user',userRouter);
