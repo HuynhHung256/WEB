@@ -7,16 +7,16 @@ const NUM_PRODUCT_IN_PAGE=4;
 
 
 
-exports.admin = async (req, res, next) => {
+exports.list = async (req, res, next) => {
     const page = req.params['page'] || 1;
     const products = await service.list(page,NUM_PRODUCT_IN_PAGE);
     const nProduct = await service.numOfProduct();
-    res.render('admin/admin', { products: products, nProduct:nProduct, page: page , nPage: Math.ceil(nProduct/NUM_PRODUCT_IN_PAGE)});
+    res.render('admin/index', { products: products, nProduct:nProduct, page: page , nPage: Math.ceil(nProduct/NUM_PRODUCT_IN_PAGE)});
 }
 exports.detail = async (req, res, next) => {
     const id = req.params['id'];
     const product = await service.productById(id);
-    res.render('admin/admin-view', { product: product });
+    res.render('admin/product-detail', { product: product });
 }
 exports.insert = (req, res, next) => {
     res.render('admin/insert');
@@ -37,10 +37,13 @@ exports.updateProduct = async (req, res, next) => {
     }
     else {
         await service.update(id, obj);
-        res.redirect('/admin-view/'+id);
+        res.redirect('/admin/product/'+id);
     }
 }
 
+exports.createAdmin=(req,res,next)=>{
+    res.render('admin/create-admin');
+}
 // exports.deleteProduct = async (req, res, next) => {
 //     const id = req.params['id'];
 //     await service.delete(id);
