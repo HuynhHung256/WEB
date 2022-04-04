@@ -7,7 +7,7 @@
                 <label for="name">Product name</label>
             </div>
             <div class="col-6">
-                <input id="name" name="name" type="text" class="form-control" placeholder="">
+                <input id="name" name="name" type="text" class="form-control" placeholder="" required  minlength="1" maxlength="100">
             </div>
         </div>
         <div class="row mb-3">
@@ -15,7 +15,7 @@
                 <label for="price">Price</label>
             </div>
             <div class="col-6">
-                <input id="price" name="price" type="number" class="form-control" placeholder="">
+                <input id="price" name="price" type="number" class="form-control" placeholder="" required min="1">
             </div>
         </div>
                 <div class="row mb-3">
@@ -23,7 +23,7 @@
                 <label for="stock">Stock</label>
             </div>
             <div class="col-6">
-                <input id="stock" name="stock" type="number" class="form-control" placeholder="">
+                <input id="stock" name="stock" type="number" class="form-control" placeholder="" required min="1">
             </div>
         </div>
 
@@ -32,7 +32,7 @@
                 <label for="author">Author</label>
             </div>
             <div class="col-6">
-                <input id="author" name="author" type="text" class="form-control" placeholder="">
+                <input id="author" name="author" type="text" class="form-control" placeholder="" required  minlength="1" maxlength="100">
             </div>
         </div>
         <div class="row mb-3">
@@ -40,7 +40,7 @@
                 <label for="year">Public Year</label>
             </div>
             <div class="col-6">
-                <input id="year" name="year" type="text" class="form-control" placeholder="">
+                <input id="year" name="year" type="number" class="form-control" placeholder="" required min="1">
             </div>
         </div>
         <div class="row mb-3">
@@ -48,7 +48,7 @@
                 <label for="genre">Genre</label>
             </div>
             <div class="col-6">
-                <input id="genre" name="genre" type="text" class="form-control" placeholder="">
+                <input id="genre" name="genre" type="text" class="form-control" placeholder="" required  minlength="1" maxlength="100">
             </div>
         </div>
         <div class="row mb-3">
@@ -56,7 +56,8 @@
                 <label for="image1">Img 1</label>
             </div>
             <div class="col-6">
-                <input id="image1" name="image1" type="text" class="form-control" placeholder="">
+                <input id="image1" name="image1" type="text" class="form-control">
+                {{!-- <input id="image1" name="image1" type="file" class="form-control" accept="image/*"> --}}
             </div>
         </div>
         <div class="row mb-3">

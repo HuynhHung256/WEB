@@ -1,15 +1,15 @@
 const Ajv = require("ajv")
-const ajv = new Ajv() // options can be passed, e.g. {allErrors: true}
+const ajv = new Ajv({allErrors: true}) // options can be passed, e.g. {allErrors: true}
 
 const productSchema = {
     type: "object",
     properties: {
-        name: { type: "string" },
-        price: { type: "integer" },
-        stock: { type: "integer" },
-        genre: { type: "string" },
-        author: { type: "string" },
-        year: { type: "integer" },
+        name: { type: "string", minLength: 1 , maxLength: 100 },
+        price: { type: "integer", minimum: 1 },
+        stock: { type: "integer", minimum: 1 },
+        genre: { type: "string", minLength: 1, maxLength: 100 },
+        author: { type: "string", minLength: 1, maxLength: 100 },
+        year: { type: "integer", minimum: 1 },
         image1: { type: "string", nullable: true },
         image2: { type: "string", nullable: true },
         image3: { type: "string", nullable: true }
@@ -18,39 +18,30 @@ const productSchema = {
     additionalProperties: false
 }
 
-const validate = ajv.compile(productSchema);
-exports.product=validate
-// const data = {
-//     name
-//         :
-//         "Vật lý",
-//     genre
-//         :
-//         "Sách giáo khoa",
-//     price
-//         :
-//         30,
-//     author
-//         :
-//         "Nhà xuất bản giáo dục",
-//     year
-//         :
-//         2021,
-//     image1
-//         :
-//         "/products/vatly.jpg",
-//     image2
-//         :
-//         "/products/nam-sinh-lop-12-lam-lai-bo-sach-giao-khoa-6-mon-gay-bao-mang...",
-//     image3
-//         :
-//         "",
-//     stock
-//         :
-//         100
-// }
+// const validate = ajv.validate(productSchema);
+// exports.product=validate
+const data = {
+    name
+        :
+        "",
+    price
+        :
+        0,
+    image2
+        :
+        "/products/nam-sinh-lop-12-lam-lai-bo-sach-giao-khoa-6-mon-gay-bao-mang...",
+    image3
+        :
+        "",
+    stock
+        :
+        100
+}
 
 // // JSON.parse(JSON.stringify(req.body))
 // // console.log(data);
 // const valid = validate(data)
 // if (valid) console.log("okok")
+
+const valid=ajv.validate(productSchema,data);
+if (!valid) console.log(ajv.errors);

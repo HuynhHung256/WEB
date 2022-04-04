@@ -2,6 +2,7 @@ const async = require('hbs/lib/async');
 const { ObjectId } = require('mongodb');
 // const { list, numOfPage, productById, send, update , delete }
 const service = require('../product/productService');
+const validator=require('../validation/userInput');
 
 const NUM_PRODUCT_IN_PAGE=4;
 
@@ -23,14 +24,19 @@ exports.showCreateProduct = (req, res, next) => {
 }
 
 exports.createProduct = async (req, res, next) => {
-    const obj = JSON.parse(JSON.stringify(req.body));
+    const obj = req.body;
+    // console.log(typeof(req.file.buffer));
+    // if(!validator.product(obj,{})){
+    //     console.log(validator.errors);
+    // }
+    // else 
     await service.send(obj);
     res.redirect('/admin');
 }
 
 exports.editProduct = async (req, res, next) => {
     const id = req.params['id'];
-    const obj = JSON.parse(JSON.stringify(req.body));
+    const obj = req.body;
     if (obj.delete) {
         await service.delete(id);
         res.redirect('/admin');
