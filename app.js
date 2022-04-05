@@ -4,6 +4,9 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
+const session = require('express-session');
+const passport=require('./components/authentication/passport');
+
 // Home
 const homeRouter = require('./components/home/homeRoute');
 
@@ -18,7 +21,7 @@ const createAdminRouter= require('./components/admin/createAdminRoute');
 // Authentication
 const signinRouter = require('./components/authentication/signinRoute');
 const signupRouter = require('./components/authentication/signupRoute');
-
+const signoutRouter = require('./components/authentication/signoutRoute');
 
 // not yet
 // const productdetailsRouter = require('./components/shop/product-details');
@@ -49,6 +52,21 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: false,
+}));
+app.use(passport.authenticate('session'));
+
+app.use(function (req,res,next) {
+  console.log(req.user);
+  res.locals.user=req.user;
+  next();
+});
+
+
+
 // home
 app.use('/', homeRouter);
 
@@ -63,6 +81,7 @@ app.use('/create-admin',createAdminRouter);
 // authentication
 app.use('/signin',signinRouter);
 app.use('/signup',signupRouter);
+app.use('/signout',signoutRouter);
 
 // user
 app.use('/user',userRouter);

@@ -92,8 +92,11 @@
                     <li><a href="/cart">Cart</a></li>
                     <li><a href="/checkout">Checkout</a></li>
                     <li>
-
-                        <a href="/signin"><i class="fa fa-user-o mr-1"></i> Sign In</a>
+                        {{#if user}}
+                            <span>Hello, {{user.email}}</span><a href="/signout">Signout</a>
+                        {{else}}
+                            <a href="/signin"><i class="fa fa-user-o mr-1"></i> Sign In</a>
+                        {{/if}}                            
                     </li>
                 </ul>
             </nav>
@@ -223,6 +226,12 @@
         <script src="js/popper.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="signin_js/main.js"></script>
+
+
+
+<script>
+    console.log(user);
+</script>
 
 </body>
 

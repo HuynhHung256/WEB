@@ -18,33 +18,29 @@ const productSchema = {
     additionalProperties: false
 }
 
-// const validate = ajv.validate(productSchema);
-// exports.product=validate
-// const data = {
-//     name
-//         :
-//         "",
-//     price
-//         :
-//         0,
-//     image2
-//         :
-//         "/products/nam-sinh-lop-12-lam-lai-bo-sach-giao-khoa-6-mon-gay-bao-mang...",
-//     image3
-//         :
-//         "",
-//     stock
-//         :
-//         100
-// }
-
-// // JSON.parse(JSON.stringify(req.body))
-// // console.log(data);
-// const valid = validate(data)
-// if (valid) console.log("okok")
-
+const accountSchema={
+    type: "object",
+    properties:{
+        email:{
+            type: 'string',
+            format: 'email',
+            minLength: 1,
+            maxLength: 100
+        },
+        password: {
+            type: 'string',
+            minLength: 6,
+        },
+        required: ['email', 'password'],
+        additionalProperties: false
+    }
+}
 
 exports.product=(obj)=>{
     const validate=ajv.validate(productSchema,obj);
+    return {valid: validate,errors: validate.errors};
+}
+exports.acount=(obj)=>{
+    const validate=ajv.validate(accountSchema,obj);
     return {valid: validate,errors: validate.errors};
 }
