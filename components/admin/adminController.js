@@ -1,3 +1,4 @@
+const { redirect } = require('express/lib/response');
 const async = require('hbs/lib/async');
 const { ObjectId } = require('mongodb');
 // const { list, numOfPage, productById, send, update , delete }
@@ -6,24 +7,46 @@ const validator=require('../validation/userInput');
 
 const NUM_PRODUCT_IN_PAGE=4;
 
-
+function isAdmin(user){
+    if(user&&user.role=='admin') return true;
+    return false;
+}
 
 exports.showList = async (req, res, next) => {
+    if(!isAdmin(req.user)){
+        res.redirect('/role-error');
+        return;
+    }
     const page = req.params['page'] || 1;
     const products = await service.list(page,NUM_PRODUCT_IN_PAGE);
     const nProduct = await service.numOfProduct();
     res.render('admin/index', { products: products, nProduct:nProduct, page: page , nPage: Math.ceil(nProduct/NUM_PRODUCT_IN_PAGE)});
 }
 exports.showDetail = async (req, res, next) => {
+    if(!isAdmin(req.user)){
+        res.redirect('/role-error');
+        return;
+    }
+
     const id = req.params['id'];
     const product = await service.productById(id);
     res.render('admin/product-detail', { product: product });
 }
 exports.showCreateProduct = (req, res, next) => {
+    if(!isAdmin(req.user)){
+        res.redirect('/role-error');
+        return;
+    }
+
     res.render('admin/insert');
 }
 
 exports.createProduct = async (req, res, next) => {
+    if(!isAdmin(req.user)){
+        res.redirect('/role-error');
+        return;
+    }
+
     const obj = req.body;
 
     // console.log(typeof(req.file.buffer));
@@ -37,6 +60,11 @@ exports.createProduct = async (req, res, next) => {
 }
 
 exports.editProduct = async (req, res, next) => {
+    if(!isAdmin(req.user)){
+        res.redirect('/role-error');
+        return;
+    }
+
     const id = req.params['id'];
     const obj = req.body;
     if (obj.delete) {
@@ -50,6 +78,11 @@ exports.editProduct = async (req, res, next) => {
 }
 
 exports.createAdmin=(req,res,next)=>{
+    if(!isAdmin(req.user)){
+        res.redirect('/role-error');
+        return;
+    }
+
     res.render('admin/create-admin');
 }
 // exports.deleteProduct = async (req, res, next) => {

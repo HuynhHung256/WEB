@@ -14,7 +14,7 @@ const homeRouter = require('./components/home/homeRoute');
 const shopRouter = require('./components/shop/shopRoute');
 
 // Admin
-const adminRouter = require('./components/admin/adminRoute');
+const adminRouter= require('./components/admin/adminRoute');
 const insertRouter= require('./components/admin/insertRoute');
 const createAdminRouter= require('./components/admin/createAdminRoute');
 
@@ -22,6 +22,8 @@ const createAdminRouter= require('./components/admin/createAdminRoute');
 const signinRouter = require('./components/authentication/signinRoute');
 const signupRouter = require('./components/authentication/signupRoute');
 const signoutRouter = require('./components/authentication/signoutRoute');
+const roleRouter = require('./components/authentication/roleRoute');
+
 
 // not yet
 // const productdetailsRouter = require('./components/shop/product-details');
@@ -82,6 +84,9 @@ app.use('/create-admin',createAdminRouter);
 app.use('/signin',signinRouter);
 app.use('/signup',signupRouter);
 app.use('/signout',signoutRouter);
+app.use('/role-error',roleRouter);
+
+
 
 // user
 app.use('/user',userRouter);

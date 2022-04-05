@@ -29,3 +29,7 @@ exports.signout= (req,res,next)=>{
     req.logout();
     res.redirect('/');
 }
+
+exports.showRoleError= (req,res,next)=>{
+    res.render('authentication/role-error')
+}

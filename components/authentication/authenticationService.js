@@ -8,7 +8,8 @@ exports.createAccount = async (email, pass) => {
     const hash = bcrypt.hashSync(pass, salt);
     const account = {
         email: email,
-        pass: hash
+        pass: hash,
+        role:'customer'
     }
     await db().collection("accounts").insertOne(account, function (err, res) {
         if (err) throw err;
