@@ -7,7 +7,8 @@
                 <label for="name">Product name</label>
             </div>
             <div class="col-6">
-                <input id="name" name="name" type="text" class="form-control" placeholder="" required  minlength="1" maxlength="100">
+                <input id="name" name="name" type="text" class="form-control" placeholder="" required minlength="1"
+                    maxlength="100">
             </div>
         </div>
         <div class="row mb-3">
@@ -18,7 +19,7 @@
                 <input id="price" name="price" type="number" class="form-control" placeholder="" required min="1">
             </div>
         </div>
-                <div class="row mb-3">
+        <div class="row mb-3">
             <div class="col-2 text-right pt-3">
                 <label for="stock">Stock</label>
             </div>
@@ -32,7 +33,8 @@
                 <label for="author">Author</label>
             </div>
             <div class="col-6">
-                <input id="author" name="author" type="text" class="form-control" placeholder="" required  minlength="1" maxlength="100">
+                <input id="author" name="author" type="text" class="form-control" placeholder="" required minlength="1"
+                    maxlength="100">
             </div>
         </div>
         <div class="row mb-3">
@@ -48,7 +50,8 @@
                 <label for="genre">Genre</label>
             </div>
             <div class="col-6">
-                <input id="genre" name="genre" type="text" class="form-control" placeholder="" required  minlength="1" maxlength="100">
+                <input id="genre" name="genre" type="text" class="form-control" placeholder="" required minlength="1"
+                    maxlength="100">
             </div>
         </div>
         <div class="row mb-3">
@@ -86,12 +89,22 @@
             </div>
         </div>
     </form>
+    {{#error}}
+    <div class="alert alert-danger ml-5 col-5" role="alert">
+        {{keyword}}: {{message}}
+    </div>
+    {{/error}}
 </div>
-{{!-- <script>
-    function sendToServer(){
+{{!--
+<script>
+    function sendToServer() {
 
     }
 </script> --}}
 <!-- Product Details Area End -->
 <!-- ##### Main Content Wrapper End ##### -->
+
+
+
+
 </div>

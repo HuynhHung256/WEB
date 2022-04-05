@@ -25,13 +25,15 @@ exports.showCreateProduct = (req, res, next) => {
 
 exports.createProduct = async (req, res, next) => {
     const obj = req.body;
+
     // console.log(typeof(req.file.buffer));
-    // if(!validator.product(obj,{})){
-    //     console.log(validator.errors);
-    // }
-    // else 
-    await service.send(obj);
-    res.redirect('/admin');
+    const validProduct=validator.product(obj);
+    if(validProduct.valid)
+        res.render('admin/insert',{error:validProduct.errors});
+    else {
+        await service.send(obj);
+        res.redirect('/admin');
+    }
 }
 
 exports.editProduct = async (req, res, next) => {
