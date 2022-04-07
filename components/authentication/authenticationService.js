@@ -27,3 +27,9 @@ exports.verifyUser=async(email,pass)=>{
         return user;
     return false;
 }
+
+exports.isUserExist=async(email)=>{
+    const user=await db().collection("accounts").findOne({email:email});
+    if(!user) return false;
+    return true;
+}

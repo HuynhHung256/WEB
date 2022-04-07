@@ -14,7 +14,13 @@ exports.showSignup = (req, res, next) => {
 }
 
 exports.signup= async(req,res,next)=>{
-    await service.createAccount(req.body.email,req.body.password);
+    const {email,pass}=req.body;
+    const user=await service.isUserExist(email);
+    if(user){
+       return; 
+    }
+    
+    await service.createAccount(email,pass);
     
     res.redirect('/');
 }
@@ -33,3 +39,4 @@ exports.signout= (req,res,next)=>{
 exports.showRoleError= (req,res,next)=>{
     res.render('authentication/role-error')
 }
+

@@ -1,5 +1,5 @@
 const { MongoClient } = require("mongodb");
-// require ('dotenv').config(); 
+require ('dotenv').config(); 
 const uri = process.env.DATABASE_URI;
 // const uri="mongodb+srv://khang:giakhang21090503@cluster0.jpfv6.mongodb.net/test?authSource=admin&replicaSet=atlas-jr2hvz-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true"
 
