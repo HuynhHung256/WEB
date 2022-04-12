@@ -14,7 +14,7 @@
                 <div class="product-topbar d-xl-flex align-items-end justify-content-between">
                     <!-- Total Products -->
                     <div class="total-products">
-                        <p>{{nProduct}} product(s) found</p>
+                        <p id="nProduct"></p>
 
                         <div class="view d-flex">
                             <a href="#"><i class="fa fa-th-large" aria-hidden="true"></i></a>
@@ -49,49 +49,7 @@
             </div>
         </div>
 
-        <div class="row">
-            {{#products}}
-            <!-- Single Product Area -->
-                                        <a href="/admin/product/{{_id}}">
-
-            <div class="col-12 col-sm-6 col-md-12 col-xl-6">
-
-                <div class="single-product-wrapper">
-                    <!-- Product Image -->
-                    <div class="product-img">
-                        <img src={{image1}} alt="">
-                        <!-- Hover Thumb -->
-                        <img class="hover-img" src={{image2}} alt="">
-                    </div>
-
-                    <!-- Product Description -->
-                    <div class="product-description d-flex align-items-center justify-content-between">
-                        <!-- Product Meta Data -->
-                        <div class="product-meta-data">
-                            <div class="line"></div>
-                            <p class="product-price"> {{price}} </p>
-                                <h6> {{name}} </h6>
-                        </div>
-                        <!-- Ratings & Cart -->
-                        <div class="ratings-cart text-right">
-                            {{!-- <div class="ratings">
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                            </div> --}}
-                            <div class="cart">
-                                <a href="/cart" data-toggle="tooltip" data-placement="left" title="Add to Cart"><img
-                                        src="img/core-img/cart.png" alt=""></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-                            </a>
-
-            {{/products}}
+        <div id="products" class="row">
         </div>
 
         <div class="row">
@@ -99,23 +57,49 @@
                 <!-- Pagination -->
                 <nav aria-label="navigation">
                     <ul class="pagination justify-content-end mt-50" id="page">
-                        <script>
-                            for (var i = 1; i <= {{nPage}}; i++) {
-                                const li = document.createElement("li");
-                                if(i=={{page}})
-                                    li.className="page-item active";
-                                else
-                                    li.className="page-item";
-                                li.innerHTML = "<a class=\"page-link\" href=\"/admin/" + i + "\">" + i + "</a>";
-                                document.getElementById("page").appendChild(li);
-                            }
-
-                        </script>
                     </ul>
                 </nav>
             </div>
         </div>
     </div>
 </div>
+{{#contentFor "script"}}
+<script>
+    $(function() {
+        $.getJSON('/admin/api/paging/1',function (res) {
+            $('#nProduct').text(res.nProduct+' product(s) found');
+            $.each(res.products,function (index, value) {
+                $('#products').append("<a href=\"/shop/product/"+value._id+"\"><div class=\"col-12 col-sm-6 col-md-12 col-xl-6\"><div class=\"single-product-wrapper\"><div class=\"product-img\"><img src="+value.image1+" alt=\"\"><img class=\"hover-img\" src="+value.image2+" alt=\"\"></div><div class=\"product-description d-flex align-items-center justify-content-between\"><div class=\"product-meta-data\"><div class=\"line\"></div><p class=\"product-price\">"+value.price+"</p><h6>"+value.name+"</h6></div><div class=\"ratings-cart text-right\"><div class=\"cart\"><a href=\"/cart\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Add to Cart\"><img src=\"img/core-img/cart.png\" alt=\"\"></a></div></div></div></div></div></a>");
+            });
+            for (var i = 1; i <= res.nPage; i++) {
+                if(i!=res.page)
+                    $('#page').append("<li class=\"page-item\"><a class=\"page-link\" onclick=\"get\Page("+i+")\">"+i+"</a></li>");
+                else
+                    $('#page').append("<li class=\"page-item active\"><a class=\"page-link\" onclick=\"get\Page("+i+")\">"+i+"</a></li>");
+            }
+        });
+    });
+    function getPage(page){
+        $.getJSON('/admin/api/paging/'+page,function (res) {
+            $('#nProduct').empty();
+            $('#products').empty();
+            $('#page').empty();
+
+            $('#nProduct').text(res.nProduct+' product(s) found');
+            $.each(res.products,function (index, value) {
+                $('#products').append("<a href=\"/shop/product/"+value._id+"\"><div class=\"col-12 col-sm-6 col-md-12 col-xl-6\"><div class=\"single-product-wrapper\"><div class=\"product-img\"><img src="+value.image1+" alt=\"\"><img class=\"hover-img\" src="+value.image2+" alt=\"\"></div><div class=\"product-description d-flex align-items-center justify-content-between\"><div class=\"product-meta-data\"><div class=\"line\"></div><p class=\"product-price\">"+value.price+"</p><h6>"+value.name+"</h6></div><div class=\"ratings-cart text-right\"><div class=\"cart\"><a href=\"/cart\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Add to Cart\"><img src=\"img/core-img/cart.png\" alt=\"\"></a></div></div></div></div></div></a>");
+            });
+            for (var i = 1; i <= res.nPage; i++) {
+                if(i!=res.page)
+                    $('#page').append("<li class=\"page-item\"><a class=\"page-link\" onclick=\"get\Page("+i+")\">"+i+"</a></li>");
+                else
+                    $('#page').append("<li class=\"page-item active\"><a class=\"page-link\" onclick=\"get\Page("+i+")\">"+i+"</a></li>");
+            }
+        });
+    }
+</script>
+
+{{/contentFor}}
+
 </div>
 <!-- ##### Main Content Wrapper End ##### -->

@@ -92,3 +92,12 @@ exports.createAdmin=(req,res,next)=>{
 //     const nPage = await service.numOfPage();
 //     res.render('admin/admin', { products: products, page: nPage });
 // }
+
+exports.getList = async (req, res, next) => {
+    const page=req.params.page;
+    const products = await service.list(page,NUM_PRODUCT_IN_PAGE);
+    const nProduct = await service.numOfProduct();
+    // console.log(page);
+    // res.render('shop/index', { products: products, nProduct:nProduct, page: page , nPage: Math.ceil(nProduct/NUM_PRODUCT_IN_PAGE), layout:'layout'});
+    res.json({ products: products, nProduct:nProduct, page: page , nPage: Math.ceil(nProduct/NUM_PRODUCT_IN_PAGE)});
+}

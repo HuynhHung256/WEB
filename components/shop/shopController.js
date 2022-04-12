@@ -13,9 +13,25 @@ exports.showList = async (req, res, next) => {
     const page=req.params['page']||1;
     const products = await service.list(page,NUM_PRODUCT_IN_PAGE);
     const nProduct = await service.numOfProduct();
-    console.log(page);
+    // console.log(page);
     res.render('shop/index', { products: products, nProduct:nProduct, page: page , nPage: Math.ceil(nProduct/NUM_PRODUCT_IN_PAGE), layout:'layout'});
 }
+
+exports.getList = async (req, res, next) => {
+    const page=req.params.page;
+    const products = await service.list(page,NUM_PRODUCT_IN_PAGE);
+    const nProduct = await service.numOfProduct();
+    // console.log(page);
+    // res.render('shop/index', { products: products, nProduct:nProduct, page: page , nPage: Math.ceil(nProduct/NUM_PRODUCT_IN_PAGE), layout:'layout'});
+    res.json({ products: products, nProduct:nProduct, page: page , nPage: Math.ceil(nProduct/NUM_PRODUCT_IN_PAGE)});
+}
+
+// exports.getNumOfPage = async (req, res, next) => {
+//     const products = await service.list(page,NUM_PRODUCT_IN_PAGE);
+//     const nProduct = await service.numOfProduct();
+//     res.json(Math.ceil(nProduct/NUM_PRODUCT_IN_PAGE));
+// }
+
 
 exports.cart = (req, res, next) => {
     res.render('shop/cart', {layout:'layout'});
