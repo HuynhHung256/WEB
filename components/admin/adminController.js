@@ -20,7 +20,7 @@ exports.showList = async (req, res, next) => {
     const page = req.params['page'] || 1;
     const products = await service.list(page,NUM_PRODUCT_IN_PAGE);
     const nProduct = await service.numOfProduct();
-    res.render('admin/index', { products: products, nProduct:nProduct, page: page , nPage: Math.ceil(nProduct/NUM_PRODUCT_IN_PAGE)});
+    res.render('admin/index', { products: products, nProduct:nProduct, page: page , nPage: Math.ceil(nProduct/NUM_PRODUCT_IN_PAGE), layout:'layout'});
 }
 exports.showDetail = async (req, res, next) => {
     if(!isAdmin(req.user)){
@@ -30,7 +30,7 @@ exports.showDetail = async (req, res, next) => {
 
     const id = req.params['id'];
     const product = await service.productById(id);
-    res.render('admin/product-detail', { product: product });
+    res.render('admin/product-detail', { product: product, layout:'layout' });
 }
 exports.showCreateProduct = (req, res, next) => {
     if(!isAdmin(req.user)){
@@ -38,7 +38,7 @@ exports.showCreateProduct = (req, res, next) => {
         return;
     }
 
-    res.render('admin/insert');
+    res.render('admin/insert', {layout:'layout'});
 }
 
 exports.createProduct = async (req, res, next) => {
@@ -52,7 +52,7 @@ exports.createProduct = async (req, res, next) => {
     // console.log(typeof(req.file.buffer));
     const validProduct=validator.product(obj);
     if(validProduct.valid)
-        res.render('admin/insert',{error:validProduct.errors});
+        res.render('admin/insert',{error:validProduct.errors, layout:'layout'});
     else {
         await service.send(obj);
         res.redirect('/admin');
@@ -83,7 +83,7 @@ exports.createAdmin=(req,res,next)=>{
         return;
     }
 
-    res.render('admin/create-admin');
+    res.render('admin/create-admin', {layout:'layout'});
 }
 // exports.deleteProduct = async (req, res, next) => {
 //     const id = req.params['id'];

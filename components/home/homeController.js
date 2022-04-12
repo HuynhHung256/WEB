@@ -11,7 +11,7 @@ exports.showHome = async(req, res, next) => {
         return;
     }
     const products = await service.list(1,9);
-    res.render('home/index', { products: products});
+    res.render('home/index', { products: products, layout:'layout'});
 
     // if(req.user==undefined || req.user.role=='customer'){
     //     const products = await service.list(1,9);

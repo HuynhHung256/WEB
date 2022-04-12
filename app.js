@@ -6,6 +6,7 @@ const logger = require('morgan');
 
 const session = require('express-session');
 const passport=require('./components/authentication/passport');
+const hbs = require('express-hbs');
 
 // Home
 const homeRouter = require('./components/home/homeRoute');
@@ -44,6 +45,10 @@ const userRouter=require('./components/user/user.js');
 const app = express();
 
 // view engine setup
+app.engine('hbs', hbs.express4({
+  partialsDir: __dirname + '/views'
+}));
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
