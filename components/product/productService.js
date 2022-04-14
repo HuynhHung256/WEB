@@ -8,11 +8,11 @@ exports.list = async (page,limit) => {
 }
 
 exports.productById = async (id) => {
-   return await db().collection('products').find({ _id: ObjectId(id)}).toArray();
+   return await db().collection('products').findOne({ _id: ObjectId(id)});
 }
 
 exports.numOfProduct = async () => {
-   return await db().collection('products').find().count();
+   return await db().collection('products').countDocuments();
 }
 
 exports.send= async(obj)=>{
