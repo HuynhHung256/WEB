@@ -11,7 +11,7 @@ exports.createAccount = async (email, pass) => {
         pass: hash,
         role:'customer'
     };
-    await db().collection("accounts").insertOne(account, function (err, res) {
+    await db().collection("accounts").insertOne(account, async function (err, res) {
         if (err) throw err;
         //neu khong co loi
         const cart={
