@@ -20,7 +20,7 @@ exports.showList = async (req, res, next) => {
     const page = req.params['page'] || 1;
     const products = await service.list(page,NUM_PRODUCT_IN_PAGE);
     const nProduct = await service.numOfProduct();
-    res.render('admin/index', { products: products, nProduct:nProduct, page: page , nPage: Math.ceil(nProduct/NUM_PRODUCT_IN_PAGE), layout:'layout'});
+    res.render('admin/index', { products: products, nProduct:nProduct, page: page , nPage: Math.ceil(nProduct/NUM_PRODUCT_IN_PAGE), layout:'layout_admin'});
 }
 exports.showDetail = async (req, res, next) => {
     if(!isAdmin(req.user)){
@@ -28,9 +28,9 @@ exports.showDetail = async (req, res, next) => {
         return;
     }
 
-    const id = req.params['id'];
+    const id = req.params.id;
     const product = await service.productById(id);
-    res.render('admin/product-detail', { product: product, layout:'layout' });
+    res.render('admin/product-detail', { product: product, layout:'layout_admin' });
 }
 exports.showCreateProduct = (req, res, next) => {
     if(!isAdmin(req.user)){
@@ -38,7 +38,7 @@ exports.showCreateProduct = (req, res, next) => {
         return;
     }
 
-    res.render('admin/insert', {layout:'layout'});
+    res.render('admin/insert', {layout:'layout_admin'});
 }
 
 exports.createProduct = async (req, res, next) => {
@@ -52,7 +52,7 @@ exports.createProduct = async (req, res, next) => {
     // console.log(typeof(req.file.buffer));
     const validProduct=validator.product(obj);
     if(validProduct.valid)
-        res.render('admin/insert',{error:validProduct.errors, layout:'layout'});
+        res.render('admin/insert',{error:validProduct.errors, layout:'layout_admin'});
     else {
         await service.send(obj);
         res.redirect('/admin');
@@ -83,7 +83,7 @@ exports.createAdmin=(req,res,next)=>{
         return;
     }
 
-    res.render('admin/create-admin', {layout:'layout'});
+    res.render('admin/create-admin', {layout:'layout_admin'});
 }
 // exports.deleteProduct = async (req, res, next) => {
 //     const id = req.params['id'];
@@ -98,6 +98,6 @@ exports.getList = async (req, res, next) => {
     const products = await service.list(page,NUM_PRODUCT_IN_PAGE);
     const nProduct = await service.numOfProduct();
     // console.log(page);
-    // res.render('shop/index', { products: products, nProduct:nProduct, page: page , nPage: Math.ceil(nProduct/NUM_PRODUCT_IN_PAGE), layout:'layout'});
+    // res.render('shop/index', { products: products, nProduct:nProduct, page: page , nPage: Math.ceil(nProduct/NUM_PRODUCT_IN_PAGE), layout:'layout_admin'});
     res.json({ products: products, nProduct:nProduct, page: page , nPage: Math.ceil(nProduct/NUM_PRODUCT_IN_PAGE)});
 }

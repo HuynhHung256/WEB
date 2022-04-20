@@ -10,6 +10,10 @@ exports.showDetail = async (req, res, next) => {
 }
 
 exports.showList = async (req, res, next) => {
+    if(req.user && req.user.role=='admin'){
+        res.redirect('/admin');
+        return;
+    }
     const page=req.params['page']||1;
     const products = await service.list(page,NUM_PRODUCT_IN_PAGE);
     const nProduct = await service.numOfProduct();

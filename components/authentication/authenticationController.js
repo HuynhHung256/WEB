@@ -15,7 +15,8 @@ exports.showSignup = (req, res, next) => {
 
 exports.signup= async(req,res,next)=>{
     const {email,password}=req.body;
-    // console.log(password);
+    console.log('user: ',email);
+    console.log('pass: ',password);
     const user=await service.isUserExist(email);
     if(user){
        res.render('authentication/signup',{error:'Email already exists',layout:'layout'});
@@ -24,7 +25,7 @@ exports.signup= async(req,res,next)=>{
     
     await service.createAccount(email,password);
     
-    res.redirect(307,'/authentication/signin');
+    res.redirect(307,'/signin');
 }
 // exports.signin= (req,res,next)=>{
 //     passport.authenticate('local',{

@@ -9,7 +9,7 @@ const passport=require('./components/authentication/passport');
 const hbs = require('express-hbs');
 
 // Home
-const homeRouter = require('./components/home/homeRoute');
+// const homeRouter = require('./components/home/homeRoute');
 
 // Shop
 const shopRouter = require('./components/shop/shopRoute');
@@ -75,10 +75,10 @@ app.use(function (req,res,next) {
 
 
 // home
-app.use('/', homeRouter);
+app.use('/', shopRouter);
 
 // shop
-app.use('/shop', shopRouter);
+// app.use('/shop', shopRouter);
 
 // admin
 app.use('/admin',adminRouter);
