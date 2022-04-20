@@ -10,12 +10,20 @@ exports.createAccount = async (email, pass) => {
         email: email,
         pass: hash,
         role:'customer'
-    }
+    };
     await db().collection("accounts").insertOne(account, function (err, res) {
         if (err) throw err;
         //neu khong co loi
+        const cart={
+            user_id: res.insertedId,
+            product_list:[]
+        };
+    
+        await db().collection("carts").insertOne(cart, function (err, res) {
+            if(err) throw err;
+        });
         console.log('Sign in');
-    })
+    });
     return;
 }
 

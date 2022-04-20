@@ -8,7 +8,12 @@ exports.showSignin = (req, res, next) => {
     else
         res.render('authentication/signin',{layout:'layout'});
 }
-
+exports.showSigninError = (req, res, next) => {
+    if(req.user)
+        res.redirect('/');
+    else
+        res.render('authentication/signin',{error: 'Incorrect username and password', layout:'layout'});
+}
 exports.showSignup = (req, res, next) => {
     res.render('authentication/signup',{layout:'layout'});
 }

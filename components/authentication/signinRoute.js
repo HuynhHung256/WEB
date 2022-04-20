@@ -6,8 +6,10 @@ const passport=require('./passport');
 
 /* GET home page. */
 router.get('/', controller.showSignin);
+router.get('/wrong-account-info', controller.showSigninError);
+
 router.post('/', passport.authenticate('local',{
     successRedirect:'/',
-    failureRedirect:'/signin'
+    failureRedirect:'/signin/wrong-account-info',
 }));
 module.exports = router;
