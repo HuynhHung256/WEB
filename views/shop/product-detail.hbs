@@ -40,16 +40,21 @@
                                     <img class="d-block w-100" src="{{image1}}" alt="First slide">
                                 </a>
                             </div>
+                            {{#if image2}}
                             <div class="carousel-item">
                                 <a class="gallery_img" href="{{image2}}">
                                     <img class="d-block w-100" src="{{image2}}" alt="Second slide">
                                 </a>
                             </div>
+                            {{/if}}
+                            {{#if image3}}
                             <div class="carousel-item">
                                 <a class="gallery_img" href="{{image3}}">
                                     <img class="d-block w-100" src="{{image3}}" alt="Third slide">
                                 </a>
                             </div>
+                            {{/if}}
+
                             {{!-- <div class="carousel-item">
                                 <a class="gallery_img" href="img/product-img/pro-big-4.jpg">
                                     <img class="d-block w-100" src="img/product-img/pro-big-4.jpg" alt="Fourth slide">
@@ -123,7 +128,11 @@
 <script>
     $('#addtocart').on('click', function () {
         const qty = $('#qty').val()
+<<<<<<< Updated upstream
         $.getJSON('/cart/api/addtocart/{{ id }}/' + qty, function (res) {
+=======
+        $.getJSON('/cart/api/addtocart/{{ id }}/'+ qty, function (res) {
+>>>>>>> Stashed changes
             if (res == true) {
                 $('#note').removeClass();
                 $('#note').text('Added');

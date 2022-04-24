@@ -48,18 +48,20 @@ exports.createProduct = async (req, res, next) => {
     }
     const product= await service.parse(req);
     // console.log(product.files);
-    await service.insert(product);
     // const obj = req.body;
 
     // console.log(typeof(req.file.buffer));
-    // const validProduct=validator.product(obj);
-    // if(validProduct.valid)
-    //     res.render('admin/insert',{error:validProduct.errors, layout:'layout_admin'});
-    // else {
+    const validProduct=validator.product(product.fields);
+    if(validProduct.valid)
+        res.render('admin/insert',{error:validProduct.errors, layout:'layout_admin'});
+    else {
         
-    //     // await service.send(obj);
-    //     res.redirect('/admin');
-    // }
+        // await service.send(obj);
+        await service.insert(product);
+
+        res.redirect('/admin');
+    }
+
 }
 
 exports.editProduct = async (req, res, next) => {
@@ -68,16 +70,17 @@ exports.editProduct = async (req, res, next) => {
         return;
     }
 
-    const id = req.params['id'];
-    const obj = req.body;
-    if (obj.delete) {
+    const id = req.params.id;
+    const product = await service.parse(req);
+    console.log(product);
+    if (product.fields.delete) {
         await service.delete(id);
         res.redirect('/admin');
     }
-    else {
-        await service.update(id, obj);
-        res.redirect('/admin/product/'+id);
-    }
+    // else {
+    //     await service.update(id, obj);
+    //     res.redirect('/admin/product/'+id);
+    // }
 }
 
 exports.createAdmin=(req,res,next)=>{
