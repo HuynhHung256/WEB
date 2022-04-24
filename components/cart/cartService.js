@@ -12,18 +12,31 @@ exports.numOfProduct = async () => {
 }
 
 exports.add= async(userid, product_id, qty)=>{
-   const addData = {
-      user: ObjectId (userid),
-      product: ObjectId (product_id),
-      qty: qty, 
-   }
-   const myquery = {_id:ObjectId(product_id)}
-   const product = await db().collection("products").findOne(myquery);
    
-   await db().collection("carts").insertOne(addData,function (err,res){
-      if (err) throw err;
-   });
+   const myquery = {user:ObjectId(userid), product:ObjectId(product_id)}
+   const cart = await db().collection("carts").findOne(myquery);
+   if (cart == null){
+      const addData  = {
+         user: ObjectId (userid),
+         product: ObjectId (product_id),
+         qty: parseInt(qty), 
+      }
+      await db().collection("carts").insertOne(addData,function (err,res){
+         if (err) throw err;
+      });
+   }
+   else {
+      const addData  = {
+         user: ObjectId (userid),
+         product: ObjectId (product_id),
+         qty: parseInt(qty) + cart.qty, 
+      }
+      await db().collection("carts").updateOne(myquery,{ $set: addData }, function (err,res){
+         if (err) throw err;
+      });
+   }
 }
+
 exports.checkinstock  = async (product_id, qty) => {
    const myquery = {_id:ObjectId(product_id)}
    const product = await db().collection("products").findOne(myquery);
@@ -35,7 +48,6 @@ exports.delete= async(id)=>{
    const myquery = { _id: ObjectId(id) };
    await db().collection("carts").delete(myquery,function (err,res){
       if (err) throw err;
-        //neu khong co loi
       console.log('Deleted');
    });
 }
