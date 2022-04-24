@@ -28,11 +28,11 @@ const roleRouter = require('./components/authentication/roleRoute');
 
 // not yet
 // const productdetailsRouter = require('./components/shop/product-details');
-const checkoutRouter = require('./components/user/checkout');
-const cartRouter = require('./components/user/cart');
-const userRouter=require('./components/user/user.js');
+const checkoutRouter = require('./components/cart/checkout');
+const cartRouter = require('./components/cart/cart');
+const userRouter=require('./components/cart/user.js');
 
-
+//cart
 // user
 
 // const adminviewRouter=require('./components/admin/admin-view');

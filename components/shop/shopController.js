@@ -6,7 +6,7 @@ const NUM_PRODUCT_IN_PAGE=4;
 exports.showDetail = async (req, res, next) => {
     const id = req.params['id'];
     const product = await service.productById(id);
-    res.render('shop/product-detail', {product:product, layout:'layout'});
+    res.render('shop/product-detail', {id:id, product:product, layout:'layout'});
 }
 
 exports.showList = async (req, res, next) => {
