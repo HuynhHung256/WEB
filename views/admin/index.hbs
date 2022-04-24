@@ -58,7 +58,7 @@
 {{#contentFor "script"}}
 <script>
     $(function() {
-        $.getJSON('/admin/api/paging/1',function (res) {
+        $.getJSON('/admin/api/paging/1/?search={{search}}',function (res) {
             $('#nProduct').text(res.nProduct+' product(s) found');
             $.each(res.products,function (index, value) {
                 $('#products').append("<a href=\"/admin/"+value._id+"\"><div class=\"col-12 col-sm-6 col-md-12 col-xl-6\"><div class=\"single-product-wrapper\"><div class=\"product-img\"><img src="+value.image1+" alt=\"\"><img class=\"hover-img\" src="+value.image2+" alt=\"\"></div><div class=\"product-description d-flex align-items-center justify-content-between\"><div class=\"product-meta-data\"><div class=\"line\"></div><p class=\"product-price\">"+value.price+"</p><h6>"+value.name+"</h6></div><div class=\"ratings-cart text-right\"><div class=\"cart\"><a href=\"/cart\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Add to Cart\"><img src=\"img/core-img/cart.png\" alt=\"\"></a></div></div></div></div></div></a>");
@@ -72,7 +72,7 @@
         });
     });
     function getPage(page){
-        $.getJSON('/admin/api/paging/'+page,function (res) {
+        $.getJSON('/admin/api/paging/'+page+'/?search='+$('#search').val() ,function (res) {
             $('#nProduct').empty();
             $('#products').empty();
             $('#page').empty();
@@ -89,6 +89,25 @@
             }
         });
     }
+    $('#search').on('input', function (){
+        $.getJSON('/admin/api/paging/1/?search='+$('#search').val(),function (res) {
+            $('#nProduct').empty();
+            $('#products').empty();
+            $('#page').empty();
+
+            $('#nProduct').text(res.nProduct+' product(s) found');
+            $.each(res.products,function (index, value) {
+                $('#products').append("<a href=\"/product/"+value._id+"\"><div class=\"col-12 col-sm-6 col-md-12 col-xl-6\"><div class=\"single-product-wrapper\"><div class=\"product-img\"><img src="+value.image1+" alt=\"\"><img class=\"hover-img\" src="+value.image2+" alt=\"\"></div><div class=\"product-description d-flex align-items-center justify-content-between\"><div class=\"product-meta-data\"><div class=\"line\"></div><p class=\"product-price\">"+value.price+"</p><h6>"+value.name+"</h6></div><div class=\"ratings-cart text-right\"><div class=\"cart\"><a href=\"/cart\" data-toggle=\"tooltip\" data-placement=\"left\" title=\"Add to Cart\"><img src=\"img/core-img/cart.png\" alt=\"\"></a></div></div></div></div></div></a>");
+            });
+            for (let i = 1; i <= res.nPage; i++) {
+                if(i!=res.page)
+                    $('#page').append("<li class=\"page-item\"><a class=\"page-link\" onclick=\"get\Page("+i+")\">"+i+"</a></li>");
+                else
+                    $('#page').append("<li class=\"page-item active\"><a class=\"page-link\" onclick=\"get\Page("+i+")\">"+i+"</a></li>");
+            }
+        });
+    });
+
 </script>
 
 {{/contentFor}}

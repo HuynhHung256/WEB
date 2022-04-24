@@ -1,7 +1,7 @@
 const async = require('hbs/lib/async');
 const service = require('../product/productService');
 
-const NUM_PRODUCT_IN_PAGE=4;
+const PRODUCT_IN_PAGE=4;
 
 exports.showDetail = async (req, res, next) => {
     const id = req.params['id'];
@@ -14,20 +14,33 @@ exports.showList = async (req, res, next) => {
         res.redirect('/admin');
         return;
     }
-    const page=req.params['page']||1;
-    const products = await service.list(page,NUM_PRODUCT_IN_PAGE);
-    const nProduct = await service.numOfProduct();
+    // const page = {
+    //     number: req.params['page'] || 1,
+    //     limit: PRODUCT_IN_PAGE
+    // };
+    // const query = {
+    //     name: {$regex:req.query.search||''}
+    // }
+
+    // const products = await service.list(query, page);
+    // const nProduct = await service.numOfProduct(query);
     // console.log(page);
-    res.render('shop/index', { products: products, nProduct:nProduct, page: page , nPage: Math.ceil(nProduct/NUM_PRODUCT_IN_PAGE), layout:'layout'});
+    res.render('shop/index', { search:req.query.search, layout:'layout'});
 }
 
 exports.getList = async (req, res, next) => {
-    const page=req.params.page;
-    const products = await service.list(page,NUM_PRODUCT_IN_PAGE);
-    const nProduct = await service.numOfProduct();
+    const page = {
+        number: req.params['page'] || 1,
+        limit: PRODUCT_IN_PAGE
+    };
+    const query = {
+        name: {$regex:req.query.search||''}
+    }
+    const products = await service.list(query,page);
+    const nProduct = await service.numOfProduct(query);
     // console.log(page);
     // res.render('shop/index', { products: products, nProduct:nProduct, page: page , nPage: Math.ceil(nProduct/NUM_PRODUCT_IN_PAGE), layout:'layout'});
-    res.json({ products: products, nProduct:nProduct, page: page , nPage: Math.ceil(nProduct/NUM_PRODUCT_IN_PAGE)});
+    res.json({ products: products, nProduct:nProduct, page: page , nPage: Math.ceil(nProduct/page.limit)});
 }
 
 // exports.getNumOfPage = async (req, res, next) => {

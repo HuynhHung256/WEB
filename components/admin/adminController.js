@@ -5,7 +5,7 @@ const { ObjectId } = require('mongodb');
 const service = require('../product/productService');
 const validator=require('../validation/userInput');
 
-const NUM_PRODUCT_IN_PAGE=4;
+const PRODUCT_IN_PAGE = 4;
 
 function isAdmin(user){
     if(user&&user.role=='admin') return true;
@@ -17,10 +17,8 @@ exports.showList = async (req, res, next) => {
         res.redirect('/role-error');
         return;
     }
-    const page = req.params['page'] || 1;
-    const products = await service.list(page,NUM_PRODUCT_IN_PAGE);
-    const nProduct = await service.numOfProduct();
-    res.render('admin/index', { products: products, nProduct:nProduct, page: page , nPage: Math.ceil(nProduct/NUM_PRODUCT_IN_PAGE), layout:'layout_admin'});
+
+    res.render('admin/index', { search:req.query.search, layout:'layout_admin'});
 }
 exports.showDetail = async (req, res, next) => {
     if(!isAdmin(req.user)){
@@ -72,15 +70,15 @@ exports.editProduct = async (req, res, next) => {
 
     const id = req.params.id;
     const product = await service.parse(req);
-    console.log(product);
+    // console.log(product.files);
     if (product.fields.delete) {
         await service.delete(id);
         res.redirect('/admin');
     }
-    // else {
-    //     await service.update(id, obj);
-    //     res.redirect('/admin/product/'+id);
-    // }
+    else {
+        await service.update(id, product);
+        res.redirect('/admin/'+id);
+    }
 }
 
 exports.createAdmin=(req,res,next)=>{
@@ -100,10 +98,16 @@ exports.createAdmin=(req,res,next)=>{
 // }
 
 exports.getList = async (req, res, next) => {
-    const page=req.params.page;
-    const products = await service.list(page,NUM_PRODUCT_IN_PAGE);
-    const nProduct = await service.numOfProduct();
+    const page = {
+        number: req.params['page'] || 1,
+        limit: PRODUCT_IN_PAGE
+    };
+    const query = {
+        name: {$regex:req.query.search||''}
+    }
+    const products = await service.list(query,page);
+    const nProduct = await service.numOfProduct(query);
     // console.log(page);
     // res.render('shop/index', { products: products, nProduct:nProduct, page: page , nPage: Math.ceil(nProduct/NUM_PRODUCT_IN_PAGE), layout:'layout_admin'});
-    res.json({ products: products, nProduct:nProduct, page: page , nPage: Math.ceil(nProduct/NUM_PRODUCT_IN_PAGE)});
+    res.json({ products: products, nProduct:nProduct, page: page.number , nPage: Math.ceil(nProduct/page.limit)});
 }
