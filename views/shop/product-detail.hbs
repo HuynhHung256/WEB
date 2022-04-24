@@ -128,11 +128,7 @@
 <script>
     $('#addtocart').on('click', function () {
         const qty = $('#qty').val()
-<<<<<<< Updated upstream
         $.getJSON('/cart/api/addtocart/{{ id }}/' + qty, function (res) {
-=======
-        $.getJSON('/cart/api/addtocart/{{ id }}/'+ qty, function (res) {
->>>>>>> Stashed changes
             if (res == true) {
                 $('#note').removeClass();
                 $('#note').text('Added');
