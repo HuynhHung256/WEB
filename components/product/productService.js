@@ -74,7 +74,7 @@ exports.insert = async (product) => {
    // console.log(product.files.image[0].filepath);
    const img = [];
    for(let i=0; i<product.files.image.length; i++) {
-      const result = await cloudinary.uploader.upload(product.files.image.files.image[i].filepath, function (err, result) {
+      const result = await cloudinary.uploader.upload(product.files.image[i].filepath, function (err, result) {
          if (err) {
             console.log('error:', err);
             next(err);
@@ -91,14 +91,21 @@ exports.insert = async (product) => {
    //         return;
    //     }
    // });
-   // fs.unlink(image.files.image.filepath, function (err) {
-   //     if (err) {
-   //         console.log('error:', err);
-   //         next(err);
-   //         return;
-   //     }
-   //     console.log('File deleted!');
-   // });
+   for(let i = 0; i <product.files.image.length; i++) {
+      fs.unlink(product.files.image[i].filepath, function (err) {
+         if (err) {
+            console.log('error:', err);
+            next(err);
+            return;
+         }
+         console.log('File deleted!');
+      });
+   }
+
+   const new_product={
+      name: product.fields.name,
+      
+   };
    // const img = {
    //     name: image.fields.name,
    //     src: result.url,
