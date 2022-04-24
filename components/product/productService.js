@@ -5,6 +5,9 @@ const { db } = require('../../models/db');
 const formidable = require('formidable');
 const cloudinary = require('cloudinary').v2;
 const fs = require('fs');
+var path = require('path');
+
+
 
 exports.list = async (page, limit) => {
    return await db().collection('products').find().skip((page - 1) * limit).limit(limit).toArray();
@@ -40,12 +43,25 @@ exports.update = async (id, new_obj) => {
 exports.delete = async (id) => {
    const myquery = { _id: ObjectId(id) };
    const product = await db().collection("products").findOne(myquery);
-   await cloudinary.uploader.destroy(product.image1,function (err){
-      if (err) {
-         console.log('error:', err);
-         throw (err);
-      }
-   });
+   // const img1 = path.parse(product.image1).base;
+   // const img2 = path.parse(product.image2).base;
+   // const img3 = path.parse(product.image3).name;
+
+   if(product.image1){
+      await cloudinary.uploader.destroy(path.parse(product.image1).name);
+   }
+   if(product.image2){
+      await cloudinary.uploader.destroy(path.parse(product.image2).name);
+   }
+   if(product.image3){
+      await cloudinary.uploader.destroy(path.parse(product.image3).name);
+   }
+   // await cloudinary.uploader.destroy(product.image1,function (err){
+   //    if (err) {
+   //       console.log('error:', err);
+   //       throw (err);
+   //    }
+   // });
    await db().collection("products").deleteOne(myquery, function (err, res) {
       if (err) throw err;
       //neu khong co loi
