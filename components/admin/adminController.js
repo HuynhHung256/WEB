@@ -46,17 +46,20 @@ exports.createProduct = async (req, res, next) => {
         res.redirect('/role-error');
         return;
     }
-
-    const obj = req.body;
+    const product= await service.parse(req);
+    // console.log(product.files);
+    await service.insert(product);
+    // const obj = req.body;
 
     // console.log(typeof(req.file.buffer));
-    const validProduct=validator.product(obj);
-    if(validProduct.valid)
-        res.render('admin/insert',{error:validProduct.errors, layout:'layout_admin'});
-    else {
-        await service.send(obj);
-        res.redirect('/admin');
-    }
+    // const validProduct=validator.product(obj);
+    // if(validProduct.valid)
+    //     res.render('admin/insert',{error:validProduct.errors, layout:'layout_admin'});
+    // else {
+        
+    //     // await service.send(obj);
+    //     res.redirect('/admin');
+    // }
 }
 
 exports.editProduct = async (req, res, next) => {

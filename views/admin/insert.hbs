@@ -1,105 +1,131 @@
+<div class="modal fade" id="my-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <div class="spinner-border" role="status">
+                </div>
+                <h5 class="modal-title mt-4" id="exampleModalLongTitle">Loading...</h5>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Product Details Area Start -->
 <div class="single-product-area section-padding-100 clearfix ml-5">
-    <div class="col-6">
-        <h3 class="mb-5 ml-5">INSERT PRODUCT</h3>
-        <form method="post" action="/insert">
-            <div class="row mb-3">
-                <div class="col-2 text-right pt-3">
-                    <label for="name">Product name</label>
+    <div class="row">
+        <div class="col-6">
+            <h3 class="mb-5 ml-5">INSERT PRODUCT</h3>
+            <form method="post" action="/insert" enctype="multipart/form-data">
+                <div class="row mb-3">
+                    <div class="col-2 text-right pt-3">
+                        <label for="name">Product name</label>
+                    </div>
+                    <div class="col-6">
+                        <input id="name" name="name" type="text" class="form-control" placeholder="" required
+                            minlength="1" maxlength="100">
+                    </div>
                 </div>
-                <div class="col-6">
-                    <input id="name" name="name" type="text" class="form-control" placeholder="" required minlength="1"
-                        maxlength="100">
+                <div class="row mb-3">
+                    <div class="col-2 text-right pt-3">
+                        <label for="price">Price</label>
+                    </div>
+                    <div class="col-6">
+                        <input id="price" name="price" type="number" class="form-control" placeholder="" required
+                            min="1">
+                    </div>
                 </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-2 text-right pt-3">
-                    <label for="price">Price</label>
+                <div class="row mb-3">
+                    <div class="col-2 text-right pt-3">
+                        <label for="stock">Stock</label>
+                    </div>
+                    <div class="col-6">
+                        <input id="stock" name="stock" type="number" class="form-control" placeholder="" required
+                            min="1">
+                    </div>
                 </div>
-                <div class="col-6">
-                    <input id="price" name="price" type="number" class="form-control" placeholder="" required min="1">
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-2 text-right pt-3">
-                    <label for="stock">Stock</label>
-                </div>
-                <div class="col-6">
-                    <input id="stock" name="stock" type="number" class="form-control" placeholder="" required min="1">
-                </div>
-            </div>
 
-            <div class="row mb-3">
-                <div class="col-2 text-right pt-3">
-                    <label for="author">Author</label>
+                <div class="row mb-3">
+                    <div class="col-2 text-right pt-3">
+                        <label for="author">Author</label>
+                    </div>
+                    <div class="col-6">
+                        <input id="author" name="author" type="text" class="form-control" placeholder="" required
+                            minlength="1" maxlength="100">
+                    </div>
                 </div>
-                <div class="col-6">
-                    <input id="author" name="author" type="text" class="form-control" placeholder="" required
-                        minlength="1" maxlength="100">
+                <div class="row mb-3">
+                    <div class="col-2 text-right pt-3">
+                        <label for="year">Public Year</label>
+                    </div>
+                    <div class="col-6">
+                        <input id="year" name="year" type="number" class="form-control" placeholder="" required min="1">
+                    </div>
                 </div>
+                <div class="row mb-3">
+                    <div class="col-2 text-right pt-3">
+                        <label for="genre">Genre</label>
+                    </div>
+                    <div class="col-6">
+                        <input id="genre" name="genre" type="text" class="form-control" placeholder="" required
+                            minlength="1" maxlength="100">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-2 text-right pt-3">
+                        <label for="image">Image 1</label>
+                    </div>
+                    <div class="col-6">
+                        {{!-- <input id="image" name="image" type="text" class="form-control"> --}}
+                        <input id="image" name="image" type="file" class="form-control" required
+                            onchange="loadFile(event,'output1')">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-2 text-right pt-3">
+                        <label for="image">Image 2</label>
+                    </div>
+                    <div class="col-6">
+                        {{!-- <input id="image" name="image" type="text" class="form-control"> --}}
+                        <input id="image" name="image" type="file" class="form-control" required
+                            onchange="loadFile(event,'output2')">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-2 text-right pt-3">
+                        <label for="image">Image 3</label>
+                    </div>
+                    <div class="col-6">
+                        {{!-- <input id="image" name="image" type="text" class="form-control"> --}}
+                        <input id="image" name="image" type="file" class="form-control" required
+                            onchange="loadFile(event,'output3')">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-5 text-right">
+                        <a href="/admin"><button type="button" class="btn btn-light ">Cancel</button></a>
+                    </div>
+                    <div class="col-4 text-left">
+                        <button id="submit" type="submit" class="btn btn-warning" onclick="modal()">Insert</button>
+                        {{!-- <input type="submit" value="Submit"> --}}
+                    </div>
+                </div>
+            </form>
+
+            {{#error}}
+            <div class="alert alert-danger ml-5 col-5" role="alert">
+                {{keyword}}: {{message}}
             </div>
-            <div class="row mb-3">
-                <div class="col-2 text-right pt-3">
-                    <label for="year">Public Year</label>
-                </div>
-                <div class="col-6">
-                    <input id="year" name="year" type="number" class="form-control" placeholder="" required min="1">
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-2 text-right pt-3">
-                    <label for="genre">Genre</label>
-                </div>
-                <div class="col-6">
-                    <input id="genre" name="genre" type="text" class="form-control" placeholder="" required
-                        minlength="1" maxlength="100">
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-2 text-right pt-3">
-                    <label for="image">Image 1</label>
-                </div>
-                <div class="col-6">
-                    {{!-- <input id="image" name="image" type="text" class="form-control"> --}}
-                    <input id="image" name="image" type="file" class="form-control" required onchange="loadFile(event)">
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-2 text-right pt-3">
-                    <label for="image">Image 2</label>
-                </div>
-                <div class="col-6">
-                    {{!-- <input id="image" name="image" type="text" class="form-control"> --}}
-                    <input id="image" name="image" type="file" class="form-control" required onchange="loadFile(event)">
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-2 text-right pt-3">
-                    <label for="image">Image 3</label>
-                </div>
-                <div class="col-6">
-                    {{!-- <input id="image" name="image" type="text" class="form-control"> --}}
-                    <input id="image" name="image" type="file" class="form-control" required onchange="loadFile(event)">
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-5 text-right">
-                    <a href="/admin"><button type="button" class="btn btn-light ">Cancel</button></a>
-                </div>
-                <div class="col-4 text-left">
-                    <button id="submit" type="submit" class="btn btn-warning">Insert</button>
-                    {{!-- <input type="submit" value="Submit"> --}}
-                </div>
-            </div>
-        </form>
-        {{#error}}
-        <div class="alert alert-danger ml-5 col-5" role="alert">
-            {{keyword}}: {{message}}
+            {{/error}}
         </div>
-        {{/error}}
-    </div>
-    <div class="col-6">
-        <image class="img-fluid" id="output">
+        <div class="col-6">
+            <p>Image 1</p>
+            <image class="img-fluid" id="output1">
+            <p class="mt-50">Image 2</p>
+            <image class="img-fluid" id="output2">
+            <p class="mt-50">Image 3</p>
+            <image class="img-fluid" id="output3">
+        </div>
 
     </div>
 
@@ -116,15 +142,15 @@
 
 
 <script>
-    const loadFile = function (event) {
-        var output = document.getElementById('output');
+    const loadFile = function (event, out) {
+        const output = document.getElementById(out);
         output.src = URL.createObjectURL(event.target.files[0]);
         output.onload = function () {
             URL.revokeObjectURL(output.src) // free memory
         }
     };
     function modal() {
-        //if ($('#name').value and $('#image').value)
+        //if ($('#name').value && $('#stock').value && $('#price').value && $('#author').value && $('#year').value && $('#genre').value)
         $('.modal').modal('show');
     }
 </script>

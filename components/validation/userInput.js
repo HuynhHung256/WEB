@@ -10,11 +10,11 @@ const productSchema = {
         genre: { type: "string", minLength: 1, maxLength: 100 },
         author: { type: "string", minLength: 1, maxLength: 100 },
         year: { type: "integer", minimum: 1 },
-        image1: { type: "string", nullable: true },
-        image2: { type: "string", nullable: true },
-        image3: { type: "string", nullable: true }
+        // image1: { type: "string", nullable: true },
+        // image2: { type: "string", nullable: true },
+        // image3: { type: "string", nullable: true }
     },
-    required: ["name", "price", "stock", "genre", "author", "year", "image1", "image2", "image3"],
+    required: ["name", "price", "stock", "genre", "author", "year"],
     additionalProperties: false
 }
 
