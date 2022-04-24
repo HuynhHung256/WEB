@@ -21,7 +21,7 @@ exports.addtocart = async ( req,res, next) => {
     const userid = req.user.id;  
     const product_id = req.params.product_id;
     const qty = req.params.qty;
-    const checkinstock = await service.checkinstock(product_id,qty);
+    const checkinstock = await service.checkinstock(userid,product_id,qty);
     if (!checkinstock){
         res.json(false);
     }

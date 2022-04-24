@@ -12,7 +12,6 @@ exports.numOfProduct = async () => {
 }
 
 exports.add= async(userid, product_id, qty)=>{
-   
    const myquery = {user:ObjectId(userid), product:ObjectId(product_id)}
    const cart = await db().collection("carts").findOne(myquery);
    if (cart == null){
@@ -37,10 +36,12 @@ exports.add= async(userid, product_id, qty)=>{
    }
 }
 
-exports.checkinstock  = async (product_id, qty) => {
+exports.checkinstock  = async (userid, product_id, qty) => {
    const myquery = {_id:ObjectId(product_id)}
    const product = await db().collection("products").findOne(myquery);
-   if (qty > product.stock)
+   const myquerycart = {user:ObjectId(userid), product:ObjectId(product_id)}
+   const cart = await db().collection("carts").findOne(myquerycart);
+   if (qty > product.stock || cart.qty + parseInt(qty) > product.stock)
       return false;
    return true;
 }
