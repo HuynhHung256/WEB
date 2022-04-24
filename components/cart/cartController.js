@@ -18,12 +18,17 @@ exports.editprodcart = async (req, res, next) => {
     }
 }
 exports.addtocart = async ( req,res, next) => {
-    const userid = req.user.id;
+    const userid = req.user.id;  
     const product_id = req.params.product_id;
     const qty = req.params.qty;
-    await service.add(userid, product_id, qty);
-
-    res.json(true);
+    const checkinstock = await service.checkinstock(product_id,qty);
+    if (!checkinstock){
+        res.json(false);
+    }
+    else {
+        await service.add(userid, product_id, qty);
+        res.json(true);
+    }
 }
 
 exports.cart = (req, res, next) => {

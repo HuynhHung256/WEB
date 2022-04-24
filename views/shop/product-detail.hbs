@@ -123,10 +123,16 @@
 <script>
     $('#addtocart').on('click', function () {
         const qty = $('#qty').val()
-        $.getJSON('/api/addtocart/' + {{ id }} + '/' + qty, function (res) {
+        $.getJSON('/cart/api/addtocart/{{ id }}/' + qty, function (res) {
             if (res == true) {
+                $('#note').removeClass();
                 $('#note').text('Added');
                 $('#note').addClass('text-success');
+            }
+            else{
+                $('#note').removeClass();
+                $('#note').text('Out of stock !');
+                $('#note').addClass('text-danger');
             }
         });
                         });
