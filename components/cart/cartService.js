@@ -37,11 +37,11 @@ exports.add= async(userid, product_id, qty)=>{
 }
 
 exports.checkinstock  = async (userid, product_id, qty) => {
-   const myquery = {_id:ObjectId(product_id)}
-   const product = await db().collection("products").findOne(myquery);
+   const myqueryprod = {_id:ObjectId(product_id)}
+   const product = await db().collection("products").findOne(myqueryprod);
    const myquerycart = {user:ObjectId(userid), product:ObjectId(product_id)}
    const cart = await db().collection("carts").findOne(myquerycart);
-   if (qty > product.stock || cart.qty + parseInt(qty) > product.stock)
+   if (qty > product.stock || (cart != null && cart.qty + parseInt(qty) > product.stock))
       return false;
    return true;
 }
