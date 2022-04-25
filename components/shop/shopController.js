@@ -34,7 +34,7 @@ exports.getList = async (req, res, next) => {
         limit: PRODUCT_IN_PAGE
     };
     const query = {
-        name: {$regex:req.query.search||''}
+        name: {$regex: req.query.search ? req.query.search : '', $options: 'i'}
     }
     const products = await service.list(query,page);
     const nProduct = await service.numOfProduct(query);
