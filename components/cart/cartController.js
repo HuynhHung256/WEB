@@ -18,23 +18,22 @@ exports.editprodcart = async (req, res, next) => {
     }
 }
 exports.addtocart = async (req, res, next) => {
-    const userid = req.user.id;
     const product_id = req.params.product_id;
     const qty = req.params.qty;
 
-    if (!userid) {
+    if (req.user == null) {
         res.json({ success: false, message: "Please signup to continue" })
     }
-    const checkinstock = await service.checkinstock(userid, product_id, qty);
-
-    if (!checkinstock) {
-        res.json({ success: false, message: "Out of stock!" });
-    }
     else {
-        await service.add(userid, product_id, qty);
-        res.json({ success: true, message: "Added" });
+        const checkinstock = await service.checkinstock(req.user.id, product_id, qty);
+        if (!checkinstock) {
+            res.json({ success: false, message: "Out of stock!" });
+        }
+        else {
+            await service.add(req.user.id, product_id, qty);
+            res.json({ success: true, message: "Added" });
+        }
     }
-
 }
 
 exports.cart = (req, res, next) => {

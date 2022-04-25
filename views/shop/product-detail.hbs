@@ -1,10 +1,11 @@
 
 <!-- Product Details Area Start -->
 <div class="single-product-area section-padding-100 clearfix">
-    <div class="d-flex flex-row-reverse fixed-top mt-5 mr-5">
+    <div class="d-flex flex-row-reverse fixed-top mt-1 mr-5">
     <div class="alert alert-danger" role="alert">
-        hahahahahahaahaahaahaahaahaahaahaahaa
+        <p id="note"> </p>
     </div>
+    
 </div>
 {{#product}}
 
@@ -117,7 +118,7 @@
                                         class="fa fa-caret-up" aria-hidden="true"></i></span>
                             </div>
                         </div>
-                        <p id="note"> </p>
+                        
                         <button id="addtocart" type="button" name="addtocart" value="5" class="btn amado-btn">Add to
                             cart</button>
                     </form>
@@ -136,15 +137,16 @@
     $('#addtocart').on('click', function () {
         const qty = $('#qty').val()
         $.getJSON('/cart/api/addtocart/{{ id }}/' + qty, function (res) {
-            if (res == true) {
+            if (res.success == true) {
                 $('#note').removeClass();
-                $('#note').text('Added');
+                $('#note').text(res.message);
                 $('#note').addClass('text-success');
             }
             else{
                 $('#note').removeClass();
-                $('#note').text('Out of stock !');
+                $('#note').text(res.message);       
                 $('#note').addClass('text-danger');
+
             }
         });
                         });
