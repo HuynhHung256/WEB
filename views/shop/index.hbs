@@ -136,7 +136,6 @@
         </div>
         <div id="alert" class="d-flex flex-row-reverse fixed-top mt-1 mr-5">
             <div id="note" class="alert alert-danger" role="alert">
-
             </div>
         </div>
         <div class="row">
@@ -152,21 +151,39 @@
 </div>
 {{#contentFor "script"}}
 <script>
+    function addToCart(prodid){
+        console.log('hahahahahahahaa');
+        $.getJSON('/cart/api/addtocart/' +prodid+ '/1', function (res) {
+            $('#note').show();
+            if (res.success == true) {
+                $('#note').removeClass('alert-danger');
+                $('#note').text(res.message);
+                $('#note').addClass('alert-success');
+            }
+            else {
+                $('#note').removeClass('alert-success');
+                $('#note').text(res.message);
+                $('#note').addClass('alert-danger');
+            }
+        });
+    };
     $(function () {
         $('#note').hide();
         $.getJSON('/api/paging/1/?search={{search}}', function (res) {
             $('#nProduct').text(res.nProduct + ' product(s) found');
             $.each(res.products, function (index, value) {
-                $('#products').append("<a href=\"/product/" + value._id + "\"><div class=\"col-12 col-sm-6 col-md-12 col-xl-6\"><div class=\"single-product-wrapper\"><div class=\"product-img\"><img src=" + value.image1 + " alt=\"\"><img class=\"hover-img\" src=" + value.image2 + " alt=\"\"></div><div class=\"product-description d-flex align-items-center justify-content-between\"><div class=\"product-meta-data\"><div class=\"line\"></div><p class=\"product-price\">" + value.price + "</p><h6>" + value.name + "</h6></div><div class=\"ratings-cart text-right\"><div class=\"cart\"><button data-toggle=\"tooltip\" data-placement=\"left\" title=\"Add to Cart\"><img src=\"img/core-img/cart.png\" alt=\"\"></button></div></div></div></div></a>");
+                $('#products').append("<a href=\"/product/" + value._id + "\"><div class=\"col-12 col-sm-6 col-md-12 col-xl-6\"><div class=\"single-product-wrapper\"><div class=\"product-img\"><img src=" + value.image1 + " alt=\"\"><img class=\"hover-img\" src=" + value.image2 + " alt=\"\"></div><div class=\"product-description d-flex align-items-center justify-content-between\"><div class=\"product-meta-data\"><div class=\"line\"></div><p class=\"product-price\">" + value.price + "</p><h6>" + value.name + "</h6></div><div class=\"ratings-cart text-right\"><div class=\"cart\"></a><button value=\""+ value._id +"\" onclick=\"addToCart('" + value._id + "')\" ><img src=\"img/core-img/cart.png\" id=\"addtocart\" ></button></div></div></div></div>");
             });
+            
             for (let i = 1; i <= res.nPage; i++) {
                 if (i != res.page)
                     $('#page').append("<li class=\"page-item\"><a class=\"page-link\" onclick=\"get\Page(" + i + ")\">" + i + "</a></li>");
                 else
                     $('#page').append("<li class=\"page-item active\"><a class=\"page-link\" onclick=\"getPage(" + i + ")\">" + i + "</a></li>");
             }
-        });
+        })
     });
+    
     function getPage(page) {
         $.getJSON('/api/paging/' + page + '/?search={{search}}', function (res) {
             $('#nProduct').empty();

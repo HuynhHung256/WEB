@@ -92,7 +92,7 @@
                     <li><a href="/checkout">Checkout</a></li>
                     <li>
                         {{#if user}}
-                            <span>Hello, {{user.email}}</span><a href="/signout">Signout</a>
+                            <a href="/user">{{user.email}} </a><a href="/signout">Signout</a>
                         {{else}}
                             <a href="/signin"><i class="fa fa-user-o mr-1"></i> Sign In</a>
                         {{/if}}                            

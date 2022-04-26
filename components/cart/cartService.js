@@ -65,8 +65,8 @@ exports.checkinstock  = async (userid, product_id, qty) => {
    return true;
 }
 exports.delete= async(id)=>{
-   const myquery = { _id: ObjectId(id) };
-   await db().collection("carts").delete(myquery,function (err,res){
+   const myquery = { user: ObjectId(id), product:ObjectId(product_id) };
+   await db().collection("carts").deleteOne(myquery,function (err,res){
       if (err) throw err;
       console.log('Deleted');
    });

@@ -1,0 +1,22 @@
+<div class="user-meta-data">
+    <div class="line"></div>
+    <!-- Edit -->
+</div>
+    
+    </div>
+    {{#contentFor "script"}}
+
+
+    <script>
+        $(function () {
+            $.getJSON('/user/api/showUserInfo', function (res) {
+                $('#products').append("<form method=\"post\" action=\"/admin/{{_id}}\" enctype=\"multipart/form-data\"><div class=\"row mb-3\"><div class=\"col-5 text-left pt-2  \"><label for=\"name\">User name</label></div><div class=\"col-6\"><input id=\"name\" name=\"name\" type=\"text\" class=\"form-control\" placeholder=\"\" value=\""+ res.name +"\" required></div></div><div class=\"row mb-3\"><div class=\"col-5 text-left pt-2  \"><label for=\"dob\">Date of birth</label></div><div class=\"col-6\"><input id=\"dob\" name=\"dob\" type=\"text\" class=\"form-control\" placeholder=\"\" value=\""+res.dob+"\" required></div></div><div class=\"row mb-3\"><div class=\"col-5 text-left pt-2  \"><label for=\"phone\">Phone number</label></div><div class=\"col-6\"><input id=\"phone\" name=\"phone\" type=\"text\" class=\"form-control\" placeholder=\"\" value=\""+res.phone+"\" required></div></div><div class=\"row mb-3\"><div class=\"col-5 text-left pt-2 \"><label for=\"address\">Address</label></div><div class=\"col-6\"><input id=\"address\" name=\"address\" type=\"text\" class=\"form-control\" placeholder=\"\" value=\""+res.address+"\"required></div></div><div class=\"row mb-3\"><div class=\"col-5 text-left pt-2  \"><label for=\"postcode\">Postcode</label></div><div class=\"col-6\"><input id=\"postcode\" name=\"postcode\" type=\"text\" class=\"form-control\" placeholder=\"\" value=\""+res.postcode+"\" required></div></div><div class=\"row mb-3\"><div class=\"col-5 text-left pt-2  \"><label for=\"email\">Email</label></div><div class=\"col-6\"><input id=\"email\" name=\"email\" type=\"text\" class=\"form-control\" placeholder=\"\" value=\""+res.email+"\" required></div></div></form>");
+            });
+        });
+    </script>
+
+    {{/contentFor}}
+
+
+
+</div>
