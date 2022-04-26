@@ -37,13 +37,24 @@ exports.addtocart = async (req, res, next) => {
     }
 }
 
-exports.cart = (req, res, next) => {
+exports.cart = async (req, res, next) => {
+    if(!req.user){
+        res.redirect('/signin');
+        return;
+    }
     // const cart= await service.getCart(req.user.id);
-    res.render('user/cart', { layout: 'layout' });
+    res.render('user/cart', {layout: 'layout' });
 }
 
 exports.getList = async (req, res, next) => {
+    if(!req.user){
+        res.json(false);
+        return;
+    }
     const cart= await service.getCart(req.user.id);
     res.json(cart);
 }
 
+exports.editQty = async (req, res, next) => {
+    res.json(true);
+}

@@ -163,7 +163,7 @@
                 if (i != res.page)
                     $('#page').append("<li class=\"page-item\"><a class=\"page-link\" onclick=\"get\Page(" + i + ")\">" + i + "</a></li>");
                 else
-                    $('#page').append("<li class=\"page-item active\"><a class=\"page-link\" onclick=\"get\Page(" + i + ")\">" + i + "</a></li>");
+                    $('#page').append("<li class=\"page-item active\"><a class=\"page-link\" onclick=\"getPage(" + i + ")\">" + i + "</a></li>");
             }
         });
     });
@@ -179,9 +179,9 @@
             });
             for (let i = 1; i <= res.nPage; i++) {
                 if (i != res.page)
-                    $('#page').append("<li class=\"page-item\"><a class=\"page-link\" onclick=\"get\Page(" + i + ")\">" + i + "</a></li>");
+                    $('#page').append("<li class=\"page-item\"><a class=\"page-link\" onclick=\"getPage(" + i + ")\">" + i + "</a></li>");
                 else
-                    $('#page').append("<li class=\"page-item active\"><a class=\"page-link\" onclick=\"get\Page(" + i + ")\">" + i + "</a></li>");
+                    $('#page').append("<li class=\"page-item active\"><a class=\"page-link\" onclick=\"getPage(" + i + ")\">" + i + "</a></li>");
             }
         });
     }

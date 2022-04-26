@@ -7,7 +7,7 @@ exports.list = async () => {
    return await db().collection('carts').find().toArray();
 }
 
-exports.getCart = async (id, page) => {
+exports.getCart = async (id) => {
    // console.log(id);
    return await db().collection('products').aggregate([
        // {$match: {user: ObjectId(id)}},
@@ -19,10 +19,10 @@ exports.getCart = async (id, page) => {
                pipeline: [
                    { $match: { $expr: { $eq: ['$user', ObjectId(id)] } } }
                ],
-               as: 'user'
+               as: 'cart'
            }
-       },{ $unwind: "$user" }
-   ]).skip((page.number - 1) * page.limit).limit(page.limit).toArray();
+       },{ $unwind: "$cart" }
+   ]).toArray();
 }
 
 

@@ -5,4 +5,8 @@ const controller=require('./cartController')
 /* GET home page. */
 router.get('/',controller.cart);
 router.get('/api/addtocart/:product_id/:qty', controller.addtocart);
+router.get('/api/get-cart', controller.getList);
+router.get('/api/edit-qty/:id', controller.editQty);
+
+
 module.exports = router;
