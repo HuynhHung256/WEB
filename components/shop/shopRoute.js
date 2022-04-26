@@ -6,7 +6,7 @@ const controller=require('./shopController');
 router.get('/', controller.showList);
 // router.get('/:page', controller.showList);
 router.get('/product/:id',controller.showDetail);
-router.get('/api/paging/:page', controller.getList);
-// router.get('/api/paging/num-of-page', controller.getNumOfPage);
+router.get('/api/get-page/', controller.getList);
+// router.get('/api/get-page/num-of-page', controller.getNumOfPage);
 
 module.exports = router;

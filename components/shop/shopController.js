@@ -29,8 +29,9 @@ exports.showList = async (req, res, next) => {
 }
 
 exports.getList = async (req, res, next) => {
+    console.log('page:', req.query.page);
     const page = {
-        number: req.params['page'] || 1,
+        number: req.query.page || 1,
         limit: PRODUCT_IN_PAGE
     };
     const query = {
