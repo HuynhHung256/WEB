@@ -51,7 +51,7 @@
                                 </td>
                             </tr>
                             {{/cart}} --}}
-                            
+
                         </tbody>
                     </table>
                 </div>
@@ -60,9 +60,9 @@
                 <div class="cart-summary">
                     <h5>Cart Total</h5>
                     <ul class="summary-table">
-                        <li><span>subtotal:</span> <span>$140.00</span></li>
-                        <li><span>delivery:</span> <span>Free</span></li>
-                        <li><span>total:</span> <span>$140.00</span></li>
+                        <li><span>subtotal:</span> <span id="subtotal"></span></li>
+                        <li><span>delivery:</span> <span id="delivery">Free</span></li>
+                        <li><span>total:</span> <span id="total"> </span></li>
                     </ul>
                     <div class="cart-btn mt-100">
                         <a href="/cart" class="btn amado-btn w-100">Checkout</a>
@@ -79,50 +79,68 @@
 
 </script>
 <script>
+    var subtotal = 0;
+    var delivery = 0;
 
     $(function () {
         $('#note').hide();
         $.getJSON('/cart/api/get-cart', function (res) {
             $.each(res, function (index, value) {
-                console.log(typeof(value._id));
-                $('#cart').append("<tr> <td class=\"cart_product_img\"> <a href=\"/product/"+value._id+"\"><img src="+value.image1+" alt=\"Product\"> </a> </td> <td class=\"cart_product_desc\"> <h5>"+value.name+"</h5> </td> <td class=\"price\"> <span>"+value.price+"</span> </td> <td class=\"qty\"> <div class=\"qty-btn d-flex\"> <div class=\"quantity\">  <input type=\"number\" class=\"qty-text pl-3\" onchange=\"Update('"+value._id+"')\" id=\"qty\" step=\"1\" min=\"0\" max=\""+value.stock+"\" name=\"quantity\" value=\""+value.cart.qty+"\" disabled></div> <button  onclick=\"minus('" + value._id + "')\" class=\"btn\"><i class=\"fa fa-minus\"></i></button> <button onclick=\"plus('" + value._id + "')\" class=\"btn\"><i class=\"fa fa-plus\"></i></button> </div></td></tr>");
+                console.log(typeof (value._id));
+                $('#cart').append("<tr> <td class=\"cart_product_img\"> <a href=\"/product/" + value._id + "\"><img src=" + value.image1 + " alt=\"Product\"> </a> </td> <td class=\"cart_product_desc\"> <h5>" + value.name + "</h5> </td> <td class=\"price\"> <span value=\"" + value.price + "\">" + value.price + "</span> </td> <td class=\"qty\"> <div class=\"qty-btn d-flex\"> <div class=\"quantity\">  <input type=\"number\" class=\"qty-text pl-3\" onchange=\"Update('" + value._id + "')\" id=\"" + value._id + "\" step=\"1\" min=\"0\" max=\"" + value.stock + "\" name=\"quantity\" value=\"" + value.cart.qty + "\" disabled></div> <button  onclick=\"minus('" + value._id + "')\" class=\"btn\"><i class=\"fa fa-minus\"></i></button> <button onclick=\"plus('" + value._id + "')\" class=\"btn\"><i class=\"fa fa-plus\"></i></button> </div></td></tr>");
+                subtotal = subtotal + parseInt(value.cart.qty) * parseInt(value.price);
+
             });
+            $('#subtotal').text(subtotal);
+            $('#total').text(subtotal + delivery);
         });
+
     });
-    function minus (id){
-        console.log('hahaha');
-        $.getJSON('/cart/api/minus-qty/' + id +'/'+ 1, function (res) {
+    function minus(id) {
+        $.getJSON('/cart/api/minus-qty/' + id + '/' + 1, function (res) {
             $('#note').show();
             if (res.success == true) {
                 $('#note').removeClass('alert-danger');
                 $('#note').text(res.message);
                 $('#note').addClass('alert-success');
-                $('#qty').val($('#qty').val()-1);
+                $('#' + id).val($('#' + id).val() - 1);
             }
-            else{
+            else {
                 $('#note').removeClass('alert-success');
-                $('#note').text(res.message);       
+                $('#note').text(res.message);
                 $('#note').addClass('alert-danger');
-                $('#qty').val('res.qty');
             }
         });
+        $.getJSON('/cart/api/prodprice/' + id, function (res) {
+            subtotal = subtotal - parseInt(res.price);
+            $('#subtotal').text(subtotal);
+            $('#total').text(subtotal + delivery);
+        });
+
     }
-    function plus (id){
-                console.log('hahaha');
-        $.getJSON('/cart/api/plus-qty/' + id +'/'+  1, function (res) {
+    function plus(id) {
+        $.getJSON('/cart/api/plus-qty/' + id + '/' + 1, function (res) {
             $('#note').show();
             if (res.success == true) {
                 $('#note').removeClass('alert-danger');
                 $('#note').text(res.message);
                 $('#note').addClass('alert-success');
+                $('#' + id).val(parseInt($('#' + id).val()) + 1);
+
             }
-            else{
+            else {
                 $('#note').removeClass('alert-success');
-                $('#note').text(res.message);       
+                $('#note').text(res.message);
                 $('#note').addClass('alert-danger');
-                
             }
         });
+        $.getJSON('/cart/api/prodprice/' + id, function (res) {
+            subtotal = subtotal + parseInt(res.price);
+            $('#subtotal').text(subtotal);
+            $('#total').text(subtotal + delivery);
+        });
+
+
     }
 
 </script>
