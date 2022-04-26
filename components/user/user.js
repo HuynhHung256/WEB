@@ -5,6 +5,7 @@ const controller=require('./userController');
 
 /* GET home page. */
 router.get('/', controller.user);
-router.get('/api/showUserInfo', controller.showuserinfo);
+router.post('/', controller.updateProfile);
+router.get('/api/get-profile', controller.getProfile);
 
 module.exports = router;

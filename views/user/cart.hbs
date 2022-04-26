@@ -48,6 +48,7 @@
                                 </td>
                             </tr>
                             {{/cart}} --}}
+                            
                         </tbody>
                     </table>
                 </div>
@@ -80,7 +81,7 @@
         $.getJSON('/cart/api/get-cart', function (res) {
             $.each(res, function (index, value) {
                 console.log(typeof(value._id));
-                $('#cart').append("<tr> <td class=\"cart_product_img\"> <a href=\"/product/"+value._id+"\"><img src="+value.image1+" alt=\"Product\"> </a> </td> <td class=\"cart_product_desc\"> <h5>"+value.name+"</h5> </td> <td class=\"price\"> <span>"+value.price+"</span> </td> <td class=\"qty\"> <div class=\"qty-btn d-flex\"> <p>Qty</p> <div class=\"quantity\">  <input type=\"number\" class=\"qty-text\" onchange=\"Update('"+value._id+"')\" id=\"qty\" step=\"1\" min=\"0\" max=\""+value.stock+"\" name=\"quantity\" value=\""+value.cart.qty+"\"></div></div></td></tr>");
+                $('#cart').append("<tr> <td class=\"cart_product_img\"> <a href=\"/product/"+value._id+"\"><img src="+value.image1+" alt=\"Product\"> </a> </td> <td class=\"cart_product_desc\"> <h5>"+value.name+"</h5> </td> <td class=\"price\"> <span>"+value.price+"</span> </td> <td class=\"qty\"> <div class=\"qty-btn d-flex\"> <div class=\"quantity\">  <input type=\"number\" class=\"qty-text pl-3\" onchange=\"Update('"+value._id+"')\" id=\"qty\" step=\"1\" min=\"0\" max=\""+value.stock+"\" name=\"quantity\" value=\""+value.cart.qty+"\" disabled></div> <button class=\"btn\"><i class=\"fa fa-minus\"></i></button> <button class=\"btn\"><i class=\"fa fa-plus\"></i></button> </div></td></tr>");
             });
         });
     });
@@ -90,7 +91,7 @@
 
             }
             else{
-                
+
             }
         });
     }

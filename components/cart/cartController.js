@@ -6,6 +6,10 @@ const { redirect } = require('express/lib/response');
 
 const PRODUCT_IN_PAGE = 12;
 
+exports.checkout = (req, res, next) => {
+    res.render('user/checkout', {layout:'layout'});
+}
+
 exports.editprodcart = async (req, res, next) => {
     const id = req.params['id'];
     const obj = req.body;

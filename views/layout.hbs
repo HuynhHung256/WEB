@@ -90,13 +90,12 @@
                     {{!-- <li><a href="/product-details">Product</a></li> --}}
                     <li><a href="/cart">Cart</a></li>
                     <li><a href="/checkout">Checkout</a></li>
-                    <li>
-                        {{#if user}}
-                            <a href="/user">{{user.email}} </a><a href="/signout">Signout</a>
-                        {{else}}
-                            <a href="/signin"><i class="fa fa-user-o mr-1"></i> Sign In</a>
-                        {{/if}}                            
-                    </li>
+                    {{#if user}}
+                    <li><a href="/user">{{user.email}} </a></li>
+                    <li><a href="/signout">Signout</a></li>
+                    {{else}}
+                    <li><a href="/signin"><i class="fa fa-user-o mr-1"></i> Sign In</a></li>
+                    {{/if}}                            
                 </ul>
             </nav>
             <!-- Button Group -->

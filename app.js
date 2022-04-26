@@ -30,7 +30,7 @@ const roleRouter = require('./components/authentication/roleRoute');
 // const productdetailsRouter = require('./components/shop/product-details');
 const checkoutRouter = require('./components/cart/checkout');
 const cartRouter = require('./components/cart/cart');
-const userRouter=require('./components/cart/user.js');
+const userRouter=require('./components/user/user');
 
 //cart
 // user

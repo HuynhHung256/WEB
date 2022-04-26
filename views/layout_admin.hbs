@@ -95,14 +95,13 @@
                     <li><a href="/insert">Insert new product</a></li>
                     <li><a href="/create-admin">Create admin</a></li>
 
-                    <li>
-                        {{#if user}}
-                            <span>Hello, {{user.email}}</span><a href="/signout">Signout</a>
-                        {{else}}
-                            <a href="/signin"><i class="fa fa-user-o mr-1"></i> Sign In</a>
-                        {{/if}}                            
-                    </li>
-                </ul>
+                    {{#if user}}
+                    <li><a>{{user.email}} </a></li>
+                    <li><a href="/signout">Signout</a></li>
+                    {{else}}
+                    <li><a href="/signin"><i class="fa fa-user-o mr-1"></i> Sign In</a></li>
+                    {{/if}}                            
+                </ul>             
             </nav>
             <!-- Button Group -->
             {{!-- <div class="amado-btn-group mt-30 mb-100">
