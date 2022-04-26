@@ -3,8 +3,8 @@ const router = express.Router();
 const controller=require('./adminController');
 
 /* GET home page. */
-router.get('/', controller.createAdmin);
-// router.post('/',controller.sendToServer);
+router.get('/', controller.showCreateAdmin);
+router.post('/',controller.createAdmin);
 
 
 module.exports = router;

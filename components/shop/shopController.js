@@ -1,7 +1,7 @@
 const async = require('hbs/lib/async');
 const service = require('../product/productService');
 
-const PRODUCT_IN_PAGE=4;
+const PRODUCT_IN_PAGE=9;
 
 exports.showDetail = async (req, res, next) => {
     const id = req.params['id'];

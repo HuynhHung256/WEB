@@ -4,6 +4,8 @@ const { ObjectId } = require('mongodb');
 // const { list, numOfPage, productById, send, update , delete }
 const service = require('../product/productService');
 const validator=require('../validation/userInput');
+const {createAccount,isUserExist}= require('../authentication/authenticationService');
+
 
 const PRODUCT_IN_PAGE = 12;
 
@@ -81,7 +83,7 @@ exports.editProduct = async (req, res, next) => {
     }
 }
 
-exports.createAdmin=(req,res,next)=>{
+exports.showCreateAdmin=(req,res,next)=>{
     if(!isAdmin(req.user)){
         res.redirect('/role-error');
         return;
@@ -105,9 +107,27 @@ exports.getList = async (req, res, next) => {
     const query = {
         name: {$regex:req.query.search||'', $options: 'i'}
     }
-    const products = await service.list(query,page);
+    const sort={
+        name:1
+    }
+    const products = await service.list(query,sort,page);
     const nProduct = await service.numOfProduct(query);
     // console.log(page);
     // res.render('shop/index', { products: products, nProduct:nProduct, page: page , nPage: Math.ceil(nProduct/NUM_PRODUCT_IN_PAGE), layout:'layout_admin'});
     res.json({ products: products, nProduct:nProduct, page: page.number , nPage: Math.ceil(nProduct/page.limit)});
+}
+
+exports.createAdmin= async (req, res, next) => {
+    const {email,password}=req.body;
+    console.log('user: ',email);
+    console.log('pass: ',password);
+    const user=await isUserExist(email);
+    if(user){
+       res.render('admin/create-admin',{error:'Email already exists',layout:'layout'});
+       return;
+    }
+    
+    await createAccount(email,password,'admin');
+    
+    res.redirect('admin');
 }

@@ -28,7 +28,7 @@ exports.signup= async(req,res,next)=>{
        return;
     }
     
-    await service.createAccount(email,password);
+    await service.createAccount(email,password,'customer');
     
     res.redirect(307,'/signin');
 }
