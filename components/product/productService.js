@@ -9,8 +9,8 @@ var path = require('path');
 
 
 
-exports.list = async (query,page) => {
-   return await db().collection('products').find(query).skip((page.number - 1) * page.limit).limit(page.limit).toArray();
+exports.list = async (query,sort,page) => {
+   return await db().collection('products').find(query).skip((page.number - 1) * page.limit).limit(page.limit).sort(sort).toArray();
 }
 
 exports.productById = async (id) => {

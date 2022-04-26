@@ -5,7 +5,7 @@ const { ObjectId } = require('mongodb');
 const service = require('../product/productService');
 const validator=require('../validation/userInput');
 
-const PRODUCT_IN_PAGE = 4;
+const PRODUCT_IN_PAGE = 12;
 
 function isAdmin(user){
     if(user&&user.role=='admin') return true;

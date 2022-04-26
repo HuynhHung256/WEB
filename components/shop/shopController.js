@@ -24,20 +24,52 @@ exports.showList = async (req, res, next) => {
 
     // const products = await service.list(query, page);
     // const nProduct = await service.numOfProduct(query);
-    // console.log(page);
-    res.render('shop/index', { search:req.query.search, layout:'layout'});
+
+    const search=req.query.search;
+    const sort=req.query.sort;
+    const genre=req.query.genre;
+    const from=req.query.from;
+    const to=req.query.to;
+    // const from=price.
+    // const page=req.query.page;
+    console.log(genre);
+
+    res.render('shop/index', { search:search,sort:sort,genre:genre,from:from,to:to, layout:'layout'});
 }
 
 exports.getList = async (req, res, next) => {
-    console.log('page:', req.query.page);
+    // console.log('page:', req.query.page);
+    // const search=req.query.search;
+    const sort_mode=req.query.sort;
+    const genre_mode=req.query.genre;
+    const from=req.query.from;
+    const to=req.query.to;
+
     const page = {
         number: req.query.page || 1,
         limit: PRODUCT_IN_PAGE
     };
     const query = {
-        name: {$regex: req.query.search ? req.query.search : '', $options: 'i'}
+        name: {$regex: req.query.search ? req.query.search : '', $options: 'i'},
+        price: {$gte: parseInt(from), $lte: parseInt(to)}
     }
-    const products = await service.list(query,page);
+    if(genre_mode!='all' && typeof genre_mode==='string'){
+        query.genre= {$regex: req.query.genre ? req.query.genre : '', $options: 'i'};
+    }
+    const sort={};
+    if(sort_mode=='year'){
+        sort.year=1;
+    }
+    if(sort_mode=='name'){
+        sort.name=1;
+    }
+    if(sort_mode=='price'){
+        sort.price=1;
+    }
+
+
+    // console.log(query, sort);
+    const products = await service.list(query,sort,page);
     const nProduct = await service.numOfProduct(query);
     // console.log(page);
     // res.render('shop/index', { products: products, nProduct:nProduct, page: page , nPage: Math.ceil(nProduct/NUM_PRODUCT_IN_PAGE), layout:'layout'});
