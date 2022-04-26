@@ -7,7 +7,6 @@ const { redirect } = require('express/lib/response');
 const PRODUCT_IN_PAGE = 12;
 
 exports.checkout = (req, res, next) => {
-    
     res.render('user/checkout', {layout:'layout'});
 }
 
@@ -63,21 +62,25 @@ exports.getList = async (req, res, next) => {
 exports.plusQty = async (req, res, next) => {
     const product_id = req.params.id;
     const checkinstock = await service.checkinstock(req.user.id, product_id, 1);
+    var quantity = await service.showCartQuantity(req.user.id,product_id);
     if (!checkinstock) {
-        res.json({success: false, message: "Out of stock!" });
+        res.json({qty:quantity, success: false, message: "Out of stock!" });
     }
 
     else {
         await service.add(req.user.id, product_id, 1);
-        res.json({ success: true, message: "Added" });
+        quantity = await service.showCartQuantity(req.user.id,product_id);
+        res.json({qty:quantity, success: true, message: "Added" });
     }
 }
 exports.minusQty = async (req, res, next) => {
     const product_id = req.params.id;
     const checkinstock = await service.checkinstock(req.user.id, product_id, 1);
     const success = await service.delete(req.user.id, product_id, 1);
+    var quantity = await service.showCartQuantity(req.user.id,product_id);
     if (success == false) {
-        res.json({ success: false, message: "Can't delete" });
+        res.json({qty:quantity, success: false, message: "Can't delete" });
     }  
-    res.json({success: true, message: "Deleted" });
+    quantity = await service.showCartQuantity(req.user.id,product_id);
+    res.json({qty:quantity, success: true, message: "Deleted" });
 }

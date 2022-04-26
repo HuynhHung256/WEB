@@ -45,16 +45,18 @@ exports.getList = async (req, res, next) => {
     const from=req.query.from;
     const to=req.query.to;
 
+
+    console.log(genre_mode);
+
     const page = {
         number: req.query.page || 1,
         limit: PRODUCT_IN_PAGE
     };
     const query = {
         name: {$regex: req.query.search ? req.query.search : '', $options: 'i'},
-        price: {$gte: parseInt(from), $lte: parseInt(to)}
-    }
-    if(genre_mode!='all' && typeof genre_mode==='string'){
-        query.genre= {$regex: req.query.genre ? req.query.genre : '', $options: 'i'};
+        price: {$gte: parseInt(from), $lte: parseInt(to)},
+        genre: {$regex: req.query.genre ? req.query.genre : '', $options: 'i'}
+
     }
     const sort={};
     if(sort_mode=='year'){

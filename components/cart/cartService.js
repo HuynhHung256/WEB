@@ -83,11 +83,11 @@ exports.checkinstock  = async (userid, product_id, qty) => {
 //          if (err) throw err;
 //       });
 // }
-// exports.showCartQuantity = async(userid, product_id) => {
-//    const myquery = { user: ObjectId(userid), product:ObjectId(product_id) };
-//    const cart = await db().collection("carts").findOne(myquery);
-//    return cart.qty;
-// }
+exports.showCartQuantity = async(userid, product_id) => {
+   const myquery = { user: ObjectId(userid), product:ObjectId(product_id) };
+   const cart = await db().collection("carts").findOne(myquery);
+   return cart.qty;
+}
 exports.delete= async(userid, product_id, qty)=>{
    const myquery = { user: ObjectId(userid), product:ObjectId(product_id) };
    const cart = await db().collection("carts").findOne(myquery);

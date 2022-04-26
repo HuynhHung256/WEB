@@ -7,13 +7,14 @@
         <!--  Catagories  -->
         <div class="catagories-menu">
             <ul>
-                <li><a href="#" onclick="loadPage('all',1)">All</a></li>
-                <li><a href="#" onclick="loadPage('education',1)">Education</a></li>
-                <li><a href="#" onclick="loadPage('fiction',1)">Fiction</a></li>
-                <li><a href="#" onclick="loadPage('novel',1)">Novel</a></li>
-                <li><a href="#" onclick="loadPage('comic',1)">Comic</a></li>
-                <li><a href="#" onclick="loadPage('science',1)">Science</a></li>
+                <li><a href="#" onclick="changeGenre('');loadPage(1)">All</a></li>
+                <li><a href="#" onclick="changeGenre('education');loadPage(1)">Education</a></li>
+                <li><a href="#" onclick="changeGenre('fiction');loadPage(1)">Fiction</a></li>
+                <li><a href="#" onclick="changeGenre('novel');loadPage(1)">Novel</a></li>
+                <li><a href="#" onclick="changeGenre('comic');loadPage(1)">Comic</a></li>
+                <li><a href="#" onclick="changeGenre('science');loadPage(1)">Science</a></li>
             </ul>
+            <span id="genre" value="{{genre}}"></span>
         </div>
     </div>
 
@@ -81,10 +82,10 @@
                     class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"
                     data-value-min="0" data-value-max="1000" data-label-result="">
                     <div class="ui-slider-range ui-widget-header ui-corner-all"></div>
-                    <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
-                    <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
+                    <span id="from" class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
+                    <span id="to" class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
                 </div>
-                <div id="price-range" onchange="loadPage({{genre}},1)" class="range-price">0 - 1000</div>
+                <div id="price-range"  class="range-price">0 - 1000</div>
             </div>
         </div>
     </div>
@@ -165,10 +166,7 @@
         });
     };
 
-    function loadPage (genre,page){
-
-
-        //       /api/get-page/?search=&sort=&genre=&price=&page=
+    function loadPage (page){
         $('#nProduct').empty();
         $('#products').empty();
         $('#page').empty();
@@ -179,34 +177,33 @@
         const first=1;
         {{/if}}
 
-
-        const search=$('#search').val();
+        const genre=$('#genre').val();
+        const search=$('#search').val() ? $('#search').val() : "{{search}}";
         const sort=$('#sort').val();
         const price=$('#price-range').text().split(' - ');
         $.getJSON('/api/get-page/?search='+search+'&sort='+sort+'&genre='+genre+'&from='+price[0]+'&to='+price[1]+'&page='+page, function (res) {
+            console.log(res);
             $('#nProduct').text(res.nProduct + ' product(s) found');
             $.each(res.products, function (index, value) {
-                $('#products').append("<a href=\"/product/" + value._id + "\"><div class=\"col-12 col-sm-6 col-md-12 col-xl-6\"><div class=\"single-product-wrapper\"><div class=\"product-img\"><img src=" + value.image1 + " alt=\"\"><img class=\"hover-img\" src=" + value.image2 + " alt=\"\"></div><div class=\"product-description d-flex align-items-center justify-content-between\"><div class=\"product-meta-data\"><div class=\"line\"></div><p class=\"product-price\">" + value.price + "</p><h6>" + value.name + "</h6></div><div class=\"ratings-cart text-right\"><div class=\"cart\"></a><button class=\"btn\" value=\""+ value._id +"\" onclick=\"addToCart('" + value._id + "')\" ><img src=\"img/core-img/cart.png\" id=\"addtocart\" ></button></div></div></div></div>");
+                $('#products').append("<a href=\"/product/" + value._id + "\"><div class=\"col-8 col-sm-4 col-md-8 col-xl-4\"><div class=\"single-product-wrapper\"><div class=\"product-img\"><img src=" + value.image1 + " alt=\"\"><img class=\"hover-img\" src=" + value.image2 + " alt=\"\"></div><div class=\"product-description d-flex align-items-center justify-content-between\"><div class=\"product-meta-data\"><div class=\"line\"></div><p class=\"product-price\">" + value.price + "</p><h6>" + value.name + "</h6></div><div class=\"ratings-cart text-right\"><div class=\"cart\"></a><button class=\"btn\" value=\""+ value._id +"\" onclick=\"addToCart('" + value._id + "')\" ><img src=\"img/core-img/cart.png\" id=\"addtocart\" ></button></div></div></div></div>");
             });
             
-            var genre_mode = genre;
-            console.log(typeof genre);
-            if (typeof genre != "string") {
-                genre_mode = "{{genre}}";
-            }
+            
 
-            console.log('genre: ' + genre_mode);
+            //console.log('genre: ' + genre);
             for (let i = 1; i <= res.nPage; i++) {
                 if (i != res.page)
-                    $('#page').append("<li class=\"page-item\"><a class=\"page-link\" onclick=\"loadPage("+genre_mode+"," + i + ")\">" + i + "</a></li>");
+                    $('#page').append("<li class=\"page-item\"><a class=\"page-link\" onclick=\"loadPage('"+genre+"'," + i + ")\">" + i + "</a></li>");
                 else
-                    $('#page').append("<li class=\"page-item active\"><a class=\"page-link\" onclick=\"loadPage("+genre_mode+"," + i + ")\">" + i + "</a></li>");
+                    $('#page').append("<li class=\"page-item active\"><a class=\"page-link\" onclick=\"loadPage('"+genre+"'," + i + ")\">" + i + "</a></li>");
             }
         })
     }
-    
+    function changeGenre(genre){
+        $('#genre').val(genre);
+    }
     $(function () {
-        loadPage('all',1)
+        loadPage(1);
         $('#note').hide();
         {{#if page}}
         const first=page;
@@ -215,42 +212,16 @@
         {{/if}}
 
     });
-    
-    function getPage(page) {
-        $.getJSON('/api/get-page/?search={{search}}&page='+page, function (res) {
-            $('#nProduct').empty();
-            $('#products').empty();
-            $('#page').empty();
-
-            $('#nProduct').text(res.nProduct + ' product(s) found');
-            $.each(res.products, function (index, value) {
-                $('#products').append("<a href=\"/product/" + value._id + "\"><div class=\"col-12 col-sm-6 col-md-12 col-xl-6\"><div class=\"single-product-wrapper\"><div class=\"product-img\"><img src=" + value.image1 + " alt=\"\"><img class=\"hover-img\" src=" + value.image2 + " alt=\"\"></div><div class=\"product-description d-flex align-items-center justify-content-between\"><div class=\"product-meta-data\"><div class=\"line\"></div><p class=\"product-price\">" + value.price + "</p><h6>" + value.name + "</h6></div><div class=\"ratings-cart text-right\"><div class=\"cart\"></a><button class=\"btn\" value=\""+ value._id +"\" onclick=\"addToCart('" + value._id + "')\" ><img src=\"img/core-img/cart.png\" id=\"addtocart\" ></button></div></div></div></div>");
-            });
-            for (let i = 1; i <= res.nPage; i++) {
-                if (i != res.page)
-                    $('#page').append("<li class=\"page-item\"><a class=\"page-link\" onclick=\"getPage(" + i + ")\">" + i + "</a></li>");
-                else
-                    $('#page').append("<li class=\"page-item active\"><a class=\"page-link\" onclick=\"getPage(" + i + ")\">" + i + "</a></li>");
-            }
-        });
-    }
-    $('#search').on('input', function () {
-        $.getJSON('/api/get-page/?search=' + $('#search').val()+'&page=1', function (res) {
-            $('#nProduct').empty();
-            $('#products').empty();
-            $('#page').empty();
-
-            $('#nProduct').text(res.nProduct + ' product(s) found');
-            $.each(res.products, function (index, value) {
-                $('#products').append("<a href=\"/product/" + value._id + "\"><div class=\"col-12 col-sm-6 col-md-12 col-xl-6\"><div class=\"single-product-wrapper\"><div class=\"product-img\"><img src=" + value.image1 + " alt=\"\"><img class=\"hover-img\" src=" + value.image2 + " alt=\"\"></div><div class=\"product-description d-flex align-items-center justify-content-between\"><div class=\"product-meta-data\"><div class=\"line\"></div><p class=\"product-price\">" + value.price + "</p><h6>" + value.name + "</h6></div><div class=\"ratings-cart text-right\"><div class=\"cart\"></a><button class=\"btn\" value=\""+ value._id +"\" onclick=\"addToCart('" + value._id + "')\" ><img src=\"img/core-img/cart.png\" id=\"addtocart\" ></button></div></div></div></div>");
-            });
-            for (let i = 1; i <= res.nPage; i++) {
-                if (i != res.page)
-                    $('#page').append("<li class=\"page-item\"><a class=\"page-link\" onclick=\"get\Page(" + i + ")\">" + i + "</a></li>");
-                else
-                    $('#page').append("<li class=\"page-item active\"><a class=\"page-link\" onclick=\"get\Page(" + i + ")\">" + i + "</a></li>");
-            }
-        });
+    $('#search').on('input', function (){
+        loadPage(1);
+    });
+    $('#from').on('click touchend', function (){
+        console.log('hehehe');
+        loadPage(1);
+    });
+    $('#to').on('click touchend', function (){
+        console.log('hehehe');
+        loadPage(1);
     });
 </script>
 
