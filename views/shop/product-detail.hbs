@@ -1,9 +1,9 @@
 
 <!-- Product Details Area Start -->
 <div class="single-product-area section-padding-100 clearfix">
-    <div class="d-flex flex-row-reverse fixed-top mt-1 mr-5">
-    <div class="alert alert-danger" role="alert">
-        <p id="note"> </p>
+    <div id="alert" class="d-flex flex-row-reverse fixed-top mt-1 mr-5">
+    <div id="note" class="alert alert-danger" role="alert">
+        
     </div>
     
 </div>
@@ -134,19 +134,23 @@
 </div>
 {{#contentFor "script"}}
 <script>
+    $(function() {
+        $('#note').hide();
+    });
     $('#addtocart').on('click', function () {
         const qty = $('#qty').val()
         $.getJSON('/cart/api/addtocart/{{ id }}/' + qty, function (res) {
+            $('#note').show();
             if (res.success == true) {
-                $('#note').removeClass();
+                $('#note').removeClass('alert-danger');
                 $('#note').text(res.message);
-                $('#note').addClass('text-success');
+                $('#note').addClass('alert-success');
             }
             else{
-                $('#note').removeClass();
+                $('#note').removeClass('alert-success');
                 $('#note').text(res.message);       
-                $('#note').addClass('text-danger');
-
+                $('#note').addClass('alert-danger');
+                
             }
         });
                         });
