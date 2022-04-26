@@ -90,6 +90,7 @@ exports.update = async (id, product) => {
             console.log('error:', err);
             throw (err);
          }
+         
          console.log('File deleted!');
       });
       new_product.image2=result.url;

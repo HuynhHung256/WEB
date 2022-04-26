@@ -4,6 +4,7 @@ const async = require('hbs/lib/async');
 const service = require('./cartService');
 const { redirect } = require('express/lib/response');
 
+const PRODUCT_IN_PAGE = 12;
 
 exports.editprodcart = async (req, res, next) => {
     const id = req.params['id'];
@@ -37,6 +38,12 @@ exports.addtocart = async (req, res, next) => {
 }
 
 exports.cart = (req, res, next) => {
+    // const cart= await service.getCart(req.user.id);
     res.render('user/cart', { layout: 'layout' });
+}
+
+exports.getList = async (req, res, next) => {
+    const cart= await service.getCart(req.user.id);
+    res.json(cart);
 }
 

@@ -40,7 +40,7 @@ exports.getList = async (req, res, next) => {
     const nProduct = await service.numOfProduct(query);
     // console.log(page);
     // res.render('shop/index', { products: products, nProduct:nProduct, page: page , nPage: Math.ceil(nProduct/NUM_PRODUCT_IN_PAGE), layout:'layout'});
-    res.json({ products: products, nProduct:nProduct, page: page , nPage: Math.ceil(nProduct/page.limit)});
+    res.json({ products: products, nProduct:nProduct, page: page.number , nPage: Math.ceil(nProduct/page.limit)});
 }
 
 // exports.getNumOfPage = async (req, res, next) => {

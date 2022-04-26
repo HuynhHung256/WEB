@@ -7,6 +7,25 @@ exports.list = async () => {
    return await db().collection('carts').find().toArray();
 }
 
+exports.getCart = async (id, page) => {
+   // console.log(id);
+   return await db().collection('products').aggregate([
+       // {$match: {user: ObjectId(id)}},
+       {
+           $lookup: {
+               from: 'carts',
+               localField: '_id',
+               foreignField: 'product',
+               pipeline: [
+                   { $match: { $expr: { $eq: ['$user', ObjectId(id)] } } }
+               ],
+               as: 'user'
+           }
+       },{ $unwind: "$user" }
+   ]).skip((page.number - 1) * page.limit).limit(page.limit).toArray();
+}
+
+
 exports.numOfProduct = async () => {
    return await db().collection('carts').countDocuments();
 }
