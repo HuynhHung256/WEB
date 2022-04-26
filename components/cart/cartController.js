@@ -42,23 +42,45 @@ exports.addtocart = async (req, res, next) => {
 }
 
 exports.cart = async (req, res, next) => {
-    if(!req.user){
+    if (!req.user) {
         res.redirect('/signin');
         return;
     }
     // const cart= await service.getCart(req.user.id);
-    res.render('user/cart', {layout: 'layout' });
+    res.render('user/cart', { layout: 'layout' });
 }
 
 exports.getList = async (req, res, next) => {
-    if(!req.user){
+    if (!req.user) {
         res.json(false);
         return;
     }
-    const cart= await service.getCart(req.user.id);
+    const cart = await service.getCart(req.user.id);
     res.json(cart);
 }
 
-exports.editQty = async (req, res, next) => {
-    res.json(true);
+exports.plusQty = async (req, res, next) => {
+    const product_id = req.params.id;
+    const checkinstock = await service.checkinstock(req.user.id, product_id, 1);
+    var quantity = await service.showCartQuantity(req.user.id,product_id);
+    if (!checkinstock) {
+        res.json({qty:quantity, success: false, message: "Out of stock!" });
+    }
+
+    else {
+        await service.add(req.user.id, product_id, 1);
+        quantity = await service.showCartQuantity(req.user.id,product_id);
+        res.json({qty:quantity, success: true, message: "Added" });
+    }
+}
+exports.minusQty = async (req, res, next) => {
+    const product_id = req.params.id;
+    const checkinstock = await service.checkinstock(req.user.id, product_id, 1);
+    const success = await service.delete(req.user.id, product_id, 1);
+    var quantity = await service.showCartQuantity(req.user.id,product_id);
+    if (success == false) {
+        res.json({qty:quantity, success: false, message: "Can't delete" });
+    }  
+    quantity = await service.showCartQuantity(req.user.id,product_id);
+    res.json({qty:quantity, success: true, message: "Deleted" });
 }

@@ -1,5 +1,8 @@
-
 <div class="cart-table-area section-padding-100">
+    <div id="alert" class="d-flex flex-row-reverse fixed-top mt-1 mr-5">
+        <div id="note" class="alert alert-danger" role="alert">
+        </div>
+    </div>
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 col-lg-8">
@@ -78,20 +81,46 @@
 <script>
 
     $(function () {
+        $('#note').hide();
         $.getJSON('/cart/api/get-cart', function (res) {
             $.each(res, function (index, value) {
                 console.log(typeof(value._id));
-                $('#cart').append("<tr> <td class=\"cart_product_img\"> <a href=\"/product/"+value._id+"\"><img src="+value.image1+" alt=\"Product\"> </a> </td> <td class=\"cart_product_desc\"> <h5>"+value.name+"</h5> </td> <td class=\"price\"> <span>"+value.price+"</span> </td> <td class=\"qty\"> <div class=\"qty-btn d-flex\"> <div class=\"quantity\">  <input type=\"number\" class=\"qty-text pl-3\" onchange=\"Update('"+value._id+"')\" id=\"qty\" step=\"1\" min=\"0\" max=\""+value.stock+"\" name=\"quantity\" value=\""+value.cart.qty+"\" disabled></div> <button class=\"btn\"><i class=\"fa fa-minus\"></i></button> <button class=\"btn\"><i class=\"fa fa-plus\"></i></button> </div></td></tr>");
+                $('#cart').append("<tr> <td class=\"cart_product_img\"> <a href=\"/product/"+value._id+"\"><img src="+value.image1+" alt=\"Product\"> </a> </td> <td class=\"cart_product_desc\"> <h5>"+value.name+"</h5> </td> <td class=\"price\"> <span>"+value.price+"</span> </td> <td class=\"qty\"> <div class=\"qty-btn d-flex\"> <div class=\"quantity\">  <input type=\"number\" class=\"qty-text pl-3\" onchange=\"Update('"+value._id+"')\" id=\"qty\" step=\"1\" min=\"0\" max=\""+value.stock+"\" name=\"quantity\" value=\""+value.cart.qty+"\" disabled></div> <button  onclick=\"minus('" + value._id + "')\" class=\"btn\"><i class=\"fa fa-minus\"></i></button> <button onclick=\"plus('" + value._id + "')\" class=\"btn\"><i class=\"fa fa-plus\"></i></button> </div></td></tr>");
             });
         });
     });
-    function Update(id) {
-        $.getJSON('/cart/api/edit-qty/'+id,function(res){
-            if(res){
-
+    function minus (id){
+        console.log('hahaha');
+        $.getJSON('/cart/api/minus-qty/' + id +'/'+ 1, function (res) {
+            $('#note').show();
+            if (res.success == true) {
+                $('#note').removeClass('alert-danger');
+                $('#note').text(res.message);
+                $('#note').addClass('alert-success');
+                $('#qty').val($('#qty').val()-1);
             }
             else{
-
+                $('#note').removeClass('alert-success');
+                $('#note').text(res.message);       
+                $('#note').addClass('alert-danger');
+                $('#qty').val('res.qty');
+            }
+        });
+    }
+    function plus (id){
+                console.log('hahaha');
+        $.getJSON('/cart/api/plus-qty/' + id +'/'+  1, function (res) {
+            $('#note').show();
+            if (res.success == true) {
+                $('#note').removeClass('alert-danger');
+                $('#note').text(res.message);
+                $('#note').addClass('alert-success');
+            }
+            else{
+                $('#note').removeClass('alert-success');
+                $('#note').text(res.message);       
+                $('#note').addClass('alert-danger');
+                
             }
         });
     }
@@ -100,6 +129,5 @@
 
 {{/contentFor}}
 </div>
-
 
 <!-- ##### Main Content Wrapper End ##### -->

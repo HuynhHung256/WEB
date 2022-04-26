@@ -64,10 +64,42 @@ exports.checkinstock  = async (userid, product_id, qty) => {
       return false;
    return true;
 }
-exports.delete= async(id)=>{
-   const myquery = { user: ObjectId(id), product:ObjectId(product_id) };
-   await db().collection("carts").deleteOne(myquery,function (err,res){
+// exports.checkcartinstock = async (product_id,qty) => {
+//    const myqueryprod = {_id:ObjectId(product_id)}
+//    const product = await db().collection("products").findOne(myqueryprod);
+//    if(product.stock < qty){
+//       return false;
+//    }
+//    return true;
+// }
+// exports.addincart = async (userid, product_id, qty)=>{
+//    const myquery = {user:ObjectId(userid), product:ObjectId(product_id)}
+//    const addData  = {
+//       user: ObjectId (userid),
+//       product: ObjectId (product_id),
+//       qty: parseInt(qty), 
+//    }
+//    await db().collection("carts").updateOne(myquery,{ $set: addData }, function (err,res){
+//          if (err) throw err;
+//       });
+// }
+exports.showCartQuantity = async(userid, product_id) => {
+   const myquery = { user: ObjectId(userid), product:ObjectId(product_id) };
+   const cart = await db().collection("carts").findOne(myquery);
+   return cart.qty;
+}
+exports.delete= async(userid, product_id, qty)=>{
+   const myquery = { user: ObjectId(userid), product:ObjectId(product_id) };
+   const cart = await db().collection("carts").findOne(myquery);
+   if(cart.qty == 0){
+      return false;
+   }
+   const addData  = {
+      user: ObjectId (userid),
+      product: ObjectId (product_id),
+      qty:  cart.qty-parseInt(qty), 
+   }
+   await db().collection("carts").updateOne(myquery,{ $set: addData }, function (err,res){
       if (err) throw err;
-      console.log('Deleted');
    });
 }
