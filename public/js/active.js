@@ -1,12 +1,12 @@
 (function ($) {
     'use strict';
 
-    var $window = $(window);
+    const $window = $(window);
 
     // :: 1.0 Masonary Gallery Active Code
 
-    var proCata = $('.amado-pro-catagory');
-    var singleProCata = ".single-products-catagory";
+    const proCata = $('.amado-pro-catagory');
+    const singleProCata = ".single-products-catagory";
 
     if ($.fn.imagesLoaded) {
         proCata.imagesLoaded(function () {
@@ -21,8 +21,8 @@
     }
 
     // :: 2.1 Search Active Code
-    var amadoSearch = $('.search-nav');
-    var searchClose = $('.search-close');
+    const amadoSearch = $('.search-nav');
+    const searchClose = $('.search-close');
 
     amadoSearch.on('click', function () {
         $('body').toggleClass('search-wrapper-on');
@@ -33,8 +33,8 @@
     });
 
     // :: 2.2 Mobile Nav Active Code
-    var amadoMobNav = $('.amado-navbar-toggler');
-    var navClose = $('.nav-close');
+    const amadoMobNav = $('.amado-navbar-toggler');
+    const navClose = $('.nav-close');
 
     amadoMobNav.on('click', function () {
         $('.header-area').toggleClass('bp-xs-on');
@@ -96,22 +96,24 @@
 
     // :: 11.0 Slider Range Price Active Code
     $('.slider-range-price').each(function () {
-        var min = jQuery(this).data('min');
-        var max = jQuery(this).data('max');
-        var unit = jQuery(this).data('unit');
-        var value_min = jQuery(this).data('value-min');
-        var value_max = jQuery(this).data('value-max');
-        var label_result = jQuery(this).data('label-result');
-        var t = $(this);
+        const min = jQuery(this).data('min');
+        const max = jQuery(this).data('max');
+        const unit = jQuery(this).data('unit');
+        const value_min = jQuery(this).data('value-min');
+        const value_max = jQuery(this).data('value-max');
+        const label_result = jQuery(this).data('label-result');
+        const t = $(this);
         $(this).slider({
             range: true,
             min: min,
             max: max,
             values: [value_min, value_max],
             slide: function (event, ui) {
-                var result = label_result + " " + unit + ui.values[0] + ' - ' + unit + ui.values[1];
-                console.log(t);
+                const result = label_result + " " + unit + ui.values[0] + ' - ' + unit + ui.values[1];
+
                 t.closest('.slider-range').find('.range-price').html(result);
+
+                loadPage(1);
             }
         });
     });

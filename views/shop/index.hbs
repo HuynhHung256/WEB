@@ -86,6 +86,9 @@
                     <span id="to" class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
                 </div>
                 <div id="price-range"  class="range-price">0 - 1000</div>
+
+
+                
             </div>
         </div>
     </div>
@@ -181,6 +184,8 @@
         const search=$('#search').val() ? $('#search').val() : "{{search}}";
         const sort=$('#sort').val();
         const price=$('#price-range').text().split(' - ');
+
+        console.log(price);
         $.getJSON('/api/get-page/?search='+search+'&sort='+sort+'&genre='+genre+'&from='+price[0]+'&to='+price[1]+'&page='+page, function (res) {
             console.log(res);
             $('#nProduct').text(res.nProduct + ' product(s) found');
@@ -213,14 +218,6 @@
 
     });
     $('#search').on('input', function (){
-        loadPage(1);
-    });
-    $('#from').on('click touchend', function (){
-        console.log('hehehe');
-        loadPage(1);
-    });
-    $('#to').on('click touchend', function (){
-        console.log('hehehe');
         loadPage(1);
     });
 </script>
